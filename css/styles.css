@@ -1,0 +1,11 @@
+/* Importación de estilos base si es necesario */
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Transiciones suaves para cambios de secciones */
+.section-view {
+  transition: opacity 0.3s ease-in-out;
+}

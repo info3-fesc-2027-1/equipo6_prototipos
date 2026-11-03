@@ -3,12 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catarsis Barbería - Inicio de Sesión</title>
+  <title>Catarsis Barbería</title>
   
+  <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+  
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
+  <!-- Estilos Locales -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Configuración de Colores Catarsis -->
   <script>
     tailwind.config = {
       theme: {
@@ -30,9 +36,9 @@
 </head>
 <body class="bg-brand-black text-brand-white font-sans min-h-screen flex flex-col justify-between">
 
-  
-  <header class="p-6 text-center border-b border-stone-800">
-    <div class="inline-flex items-center space-x-3">
+  <!-- Encabezado / Branding -->
+  <header class="p-6 text-center border-b border-stone-800 bg-brand-dark/50 backdrop-blur-md sticky top-0 z-50">
+    <div class="inline-flex items-center space-x-3 cursor-pointer" id="brand-logo">
       <i class="fa-solid fa-scissors text-3xl text-brand-brown"></i>
       <h1 class="text-3xl font-extrabold tracking-widest text-brand-white uppercase">
         Catarsis
@@ -41,22 +47,20 @@
     <p class="text-xs text-stone-400 mt-1 tracking-wider uppercase">Barbería & Grooming</p>
   </header>
 
- 
-  <main class="flex-grow flex items-center justify-center p-4">
+  <!-- SECCIÓN 1: VISTA DE INICIO / LOGIN -->
+  <main id="login-section" class="section-view flex-grow flex items-center justify-center p-4">
     <div class="w-full max-w-md bg-stone-900 border border-stone-800 rounded-2xl shadow-2xl p-8 my-8">
-      
       
       <div class="text-center mb-8">
         <div class="w-20 h-20 bg-brand-brown/10 border border-brand-brown rounded-full flex items-center justify-center mx-auto mb-4">
           <i class="fa-solid fa-user text-3xl text-brand-brown"></i>
         </div>
         <h2 class="text-2xl font-bold text-brand-white">Bienvenido</h2>
-        <p class="text-sm text-stone-400 mt-1">Inicia sesión para reservar tu cita</p>
+        <p class="text-sm text-stone-400 mt-1">Inicia sesión para gestionar tus citas</p>
       </div>
 
-      <!-- Mensaje de Error / Notificación -->
-      <div id="error-message" class="hidden mb-4 p-3 bg-red-900/30 border border-red-800 text-red-300 text-sm rounded-lg text-center">
-      </div>
+      <!-- Alerta de Error -->
+      <div id="error-message" class="hidden mb-4 p-3 bg-red-900/30 border border-red-800 text-red-300 text-sm rounded-lg text-center"></div>
 
       <!-- Formulario -->
       <form id="login-form" class="space-y-5">
@@ -71,7 +75,6 @@
             <input 
               type="email" 
               id="email" 
-              name="email" 
               required
               placeholder="cliente@catarsis.com" 
               class="w-full pl-10 pr-4 py-3 bg-stone-950 border border-stone-800 rounded-lg text-brand-white placeholder-stone-600 focus:outline-none focus:border-brand-brown transition-colors"
@@ -90,7 +93,6 @@
             <input 
               type="password" 
               id="password" 
-              name="password" 
               required
               placeholder="••••••••" 
               class="w-full pl-10 pr-10 py-3 bg-stone-950 border border-stone-800 rounded-lg text-brand-white placeholder-stone-600 focus:outline-none focus:border-brand-brown transition-colors"
@@ -123,7 +125,6 @@
         </button>
       </form>
 
-      <!-- Divisor -->
       <div class="relative my-6">
         <div class="absolute inset-0 flex items-center">
           <div class="w-full border-t border-stone-800"></div>
@@ -133,31 +134,129 @@
         </div>
       </div>
 
-      <!-- Enlace para registrarse o ingresar rápido -->
       <div class="text-center space-y-3">
         <button 
           type="button" 
-          id="guest-login" 
-          class="w-full py-2.5 bg-transparent border border-stone-700 hover:border-brand-brown text-stone-300 hover:text-brand-white rounded-lg text-sm transition-colors"
+          id="btn-go-services" 
+          class="w-full py-2.5 bg-transparent border border-stone-700 hover:border-brand-brown text-stone-300 hover:text-brand-white rounded-lg text-sm transition-colors flex items-center justify-center space-x-2 cursor-pointer"
         >
-          Ver Servicios sin iniciar sesión
+          <span>Ver Servicios de Barbería</span>
+          <i class="fa-solid fa-arrow-right text-xs text-brand-brown"></i>
         </button>
+      </div>
 
-        <p class="text-xs text-stone-400 pt-2">
-          ¿No tienes una cuenta? 
-          <a href="#" id="register-link" class="text-brand-brown hover:text-brand-brown-light font-semibold">Registrate aquí</a>
-        </p>
+    </div>
+  </main>
+
+  <!-- SECCIÓN 2: VISTA DE SERVICIOS -->
+  <main id="services-section" class="section-view hidden flex-grow p-4 md:p-8 max-w-6xl mx-auto w-full">
+    
+    <!-- Barra superior de navegación interna -->
+    <div class="flex items-center justify-between mb-8 pb-4 border-b border-stone-800">
+      <div>
+        <h2 class="text-2xl font-bold text-brand-white">Nuestros Servicios</h2>
+        <p class="text-sm text-stone-400">Selecciona los cortes o tratamientos que deseas</p>
+      </div>
+      <button 
+        id="btn-back-login" 
+        class="text-xs text-stone-400 hover:text-brand-brown transition-colors flex items-center space-x-2 border border-stone-800 px-3 py-2 rounded-lg cursor-pointer"
+      >
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Volver al inicio</span>
+      </button>
+    </div>
+
+    <!-- Filtros de categoría -->
+    <div class="flex space-x-2 overflow-x-auto pb-4 mb-6 scrollbar-none">
+      <button class="filter-btn active bg-brand-brown text-brand-white px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap cursor-pointer" data-category="todos">
+        Todos
+      </button>
+      <button class="filter-btn bg-stone-900 text-stone-400 hover:text-brand-white px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap border border-stone-800 cursor-pointer" data-category="cabello">
+        Cabello
+      </button>
+      <button class="filter-btn bg-stone-900 text-stone-400 hover:text-brand-white px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap border border-stone-800 cursor-pointer" data-category="barba">
+        Barba
+      </button>
+      <button class="filter-btn bg-stone-900 text-stone-400 hover:text-brand-white px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap border border-stone-800 cursor-pointer" data-category="combos">
+        Combos Catarsis
+      </button>
+    </div>
+
+    <!-- Grid de Tarjetas de Servicios -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="services-grid">
+      
+      <!-- Tarjeta 1: Corte Clásico -->
+      <div class="service-card bg-stone-900 border border-stone-800 rounded-xl p-5 flex flex-col justify-between hover:border-brand-brown transition-all" data-category="cabello">
+        <div>
+          <div class="flex justify-between items-start mb-3">
+            <span class="text-xs bg-stone-800 text-brand-brown px-2 py-1 rounded font-mono">30 min</span>
+            <span class="text-lg font-bold text-brand-white">$250 MXN</span>
+          </div>
+          <h3 class="text-lg font-bold text-brand-white mb-2">Corte Catarsis Classic</h3>
+          <p class="text-xs text-stone-400 mb-4">Corte de cabello personalizado, lavado con champú especial y peinado con cera mate.</p>
+        </div>
+        <button class="select-service-btn w-full py-2.5 bg-stone-800 hover:bg-brand-brown text-stone-200 hover:text-brand-white rounded-lg text-xs font-bold uppercase transition-colors cursor-pointer">
+          Seleccionar Cita
+        </button>
+      </div>
+
+      <!-- Tarjeta 2: Perfilado de Barba -->
+      <div class="service-card bg-stone-900 border border-stone-800 rounded-xl p-5 flex flex-col justify-between hover:border-brand-brown transition-all" data-category="barba">
+        <div>
+          <div class="flex justify-between items-start mb-3">
+            <span class="text-xs bg-stone-800 text-brand-brown px-2 py-1 rounded font-mono">25 min</span>
+            <span class="text-lg font-bold text-brand-white">$180 MXN</span>
+          </div>
+          <h3 class="text-lg font-bold text-brand-white mb-2">Barba & Toalla Caliente</h3>
+          <p class="text-xs text-stone-400 mb-4">Diseño y perfilado de barba con navaja, tratamiento de toalla caliente y aceites hidratantes.</p>
+        </div>
+        <button class="select-service-btn w-full py-2.5 bg-stone-800 hover:bg-brand-brown text-stone-200 hover:text-brand-white rounded-lg text-xs font-bold uppercase transition-colors cursor-pointer">
+          Seleccionar Cita
+        </button>
+      </div>
+
+      <!-- Tarjeta 3: Combo Catarsis -->
+      <div class="service-card bg-stone-900 border border-brand-brown/40 rounded-xl p-5 flex flex-col justify-between hover:border-brand-brown transition-all relative overflow-hidden" data-category="combos">
+        <div class="absolute top-0 right-0 bg-brand-brown text-brand-white text-[10px] font-bold px-3 py-1 rounded-bl">RECOMENDADO</div>
+        <div>
+          <div class="flex justify-between items-start mb-3 mt-1">
+            <span class="text-xs bg-stone-800 text-brand-brown px-2 py-1 rounded font-mono">50 min</span>
+            <span class="text-lg font-bold text-brand-white">$380 MXN</span>
+          </div>
+          <h3 class="text-lg font-bold text-brand-white mb-2">Combo Catarsis Full</h3>
+          <p class="text-xs text-stone-400 mb-4">Corte de cabello completo + Perfilado de barba con ritual de toalla caliente y bebida cortesía.</p>
+        </div>
+        <button class="select-service-btn w-full py-2.5 bg-brand-brown hover:bg-brand-brown-light text-brand-white rounded-lg text-xs font-bold uppercase transition-colors cursor-pointer">
+          Seleccionar Cita
+        </button>
+      </div>
+
+      <!-- Tarjeta 4: Exfoliación Facial -->
+      <div class="service-card bg-stone-900 border border-stone-800 rounded-xl p-5 flex flex-col justify-between hover:border-brand-brown transition-all" data-category="combos">
+        <div>
+          <div class="flex justify-between items-start mb-3">
+            <span class="text-xs bg-stone-800 text-brand-brown px-2 py-1 rounded font-mono">20 min</span>
+            <span class="text-lg font-bold text-brand-white">$150 MXN</span>
+          </div>
+          <h3 class="text-lg font-bold text-brand-white mb-2">Mascarilla & Exfoliación</h3>
+          <p class="text-xs text-stone-400 mb-4">Limpieza facial profunda con mascarilla negra de carbón activo y exfoliación revitalizante.</p>
+        </div>
+        <button class="select-service-btn w-full py-2.5 bg-stone-800 hover:bg-brand-brown text-stone-200 hover:text-brand-white rounded-lg text-xs font-bold uppercase transition-colors cursor-pointer">
+          Seleccionar Cita
+        </button>
       </div>
 
     </div>
   </main>
 
   <!-- Pie de página -->
-  <footer class="p-4 text-center text-xs text-stone-500 border-t border-stone-800">
+  <footer class="p-4 text-center text-xs text-stone-500 border-t border-stone-800 bg-brand-dark/30">
     <p>&copy; 2026 Catarsis Barbería. Todos los derechos reservados.</p>
   </footer>
 
-  <!-- Script JS externo -->
+  <!-- Script JS Carga Correcta -->
+  <script src="js/script.js"></script>
+  <!-- Alternativa por si tu script.js está en la misma carpeta raíz que index.html -->
   <script src="script.js"></script>
 </body>
 </html>
