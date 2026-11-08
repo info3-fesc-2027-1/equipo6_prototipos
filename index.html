@@ -36,157 +36,169 @@
 </head>
 <body class="bg-brand-black text-brand-white font-sans min-h-screen flex flex-col justify-between">
 
-  <!-- Encabezado / Branding -->
-  <header class="p-6 text-center border-b border-stone-800 bg-brand-dark/50 backdrop-blur-md sticky top-0 z-50">
+  <!-- ENCABEZADO / NAV BAR (Con Botón de Login a la Derecha) -->
+  <header class="p-4 md:px-8 border-b border-stone-800 bg-brand-dark/80 backdrop-blur-md sticky top-0 z-40 flex items-center justify-between">
+    <!-- Logotipo -->
     <div class="inline-flex items-center space-x-3 cursor-pointer" id="brand-logo">
-      <i class="fa-solid fa-scissors text-3xl text-brand-brown"></i>
-      <h1 class="text-3xl font-extrabold tracking-widest text-brand-white uppercase">
+      <i class="fa-solid fa-scissors text-2xl text-brand-brown"></i>
+      <span class="text-2xl font-extrabold tracking-widest text-brand-white uppercase">
         Catarsis
-      </h1>
+      </span>
     </div>
-    <p class="text-xs text-stone-400 mt-1 tracking-wider uppercase">Barbería & Grooming</p>
+
+    <!-- Menú Rápido y Botón Iniciar Sesión -->
+    <div class="flex items-center space-x-6">
+      <nav class="hidden md:flex space-x-6 text-xs uppercase tracking-wider text-stone-300">
+        <a href="#quienes-somos" class="hover:text-brand-brown transition-colors">Quiénes Somos</a>
+        <a href="#destacados" class="hover:text-brand-brown transition-colors">Servicios</a>
+        <a href="#galeria" class="hover:text-brand-brown transition-colors">Trabajo</a>
+      </nav>
+
+      <!-- Botón Arriba a la Derecha -->
+      <button 
+        id="btn-open-login" 
+        class="px-5 py-2.5 bg-brand-brown hover:bg-brand-brown-light text-brand-white font-bold text-xs rounded-lg uppercase tracking-wider transition-all shadow-md flex items-center space-x-2 cursor-pointer"
+      >
+        <i class="fa-solid fa-user text-xs"></i>
+        <span>Iniciar Sesión</span>
+      </button>
+    </div>
   </header>
 
-  <!-- SECCIÓN 1: VISTA DE INICIO / LOGIN -->
-  <main id="login-section" class="section-view flex-grow flex items-center justify-center p-4">
-    <div class="w-full max-w-md bg-stone-900 border border-stone-800 rounded-2xl shadow-2xl p-8 my-8">
-      
-      <div class="text-center mb-8">
-        <div class="w-20 h-20 bg-brand-brown/10 border border-brand-brown rounded-full flex items-center justify-center mx-auto mb-4">
-          <i class="fa-solid fa-user text-3xl text-brand-brown"></i>
-        </div>
-        <h2 class="text-2xl font-bold text-brand-white">Bienvenido</h2>
-        <p class="text-sm text-stone-400 mt-1">Inicia sesión para gestionar tus citas</p>
-      </div>
-
-      <!-- Alerta de Error -->
-      <div id="error-message" class="hidden mb-4 p-3 bg-red-900/30 border border-red-800 text-red-300 text-sm rounded-lg text-center"></div>
-
-      <!-- Formulario -->
-      <form id="login-form" class="space-y-5">
-        <div>
-          <label for="email" class="block text-xs font-semibold text-stone-300 uppercase tracking-wider mb-2">
-            Correo Electrónico
-          </label>
-          <div class="relative">
-            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-stone-500">
-              <i class="fa-solid fa-envelope"></i>
-            </span>
-            <input 
-              type="email" 
-              id="email" 
-              required
-              placeholder="cliente@catarsis.com" 
-              class="w-full pl-10 pr-4 py-3 bg-stone-950 border border-stone-800 rounded-lg text-brand-white placeholder-stone-600 focus:outline-none focus:border-brand-brown transition-colors"
-            >
-          </div>
-        </div>
-
-        <div>
-          <label for="password" class="block text-xs font-semibold text-stone-300 uppercase tracking-wider mb-2">
-            Contraseña
-          </label>
-          <div class="relative">
-            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-stone-500">
-              <i class="fa-solid fa-lock"></i>
-            </span>
-            <input 
-              type="password" 
-              id="password" 
-              required
-              placeholder="••••••••" 
-              class="w-full pl-10 pr-10 py-3 bg-stone-950 border border-stone-800 rounded-lg text-brand-white placeholder-stone-600 focus:outline-none focus:border-brand-brown transition-colors"
-            >
-            <button 
-              type="button" 
-              id="toggle-password" 
-              class="absolute inset-y-0 right-0 flex items-center pr-3 text-stone-500 hover:text-stone-300"
-            >
-              <i class="fa-solid fa-eye" id="eye-icon"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="flex items-center justify-between text-xs">
-          <label class="flex items-center text-stone-400 cursor-pointer">
-            <input type="checkbox" id="remember" class="accent-brand-brown rounded bg-stone-950 border-stone-800 mr-2">
-            Recordarme
-          </label>
-          <a href="#" id="forgot-password" class="text-brand-brown hover:text-brand-brown-light transition-colors">
-            ¿Olvidaste tu contraseña?
-          </a>
-        </div>
-
-        <button 
-          type="submit" 
-          class="w-full py-3.5 bg-brand-brown hover:bg-brand-brown-light text-brand-white font-bold rounded-lg shadow-lg hover:shadow-brand-brown/20 transition-all duration-200 uppercase tracking-wider text-sm mt-2"
-        >
-          Iniciar Sesión
-        </button>
-      </form>
-
-      <div class="relative my-6">
-        <div class="absolute inset-0 flex items-center">
-          <div class="w-full border-t border-stone-800"></div>
-        </div>
-        <div class="relative flex justify-center text-xs uppercase">
-          <span class="bg-stone-900 px-3 text-stone-500">O entra como invitado</span>
-        </div>
-      </div>
-
-      <div class="text-center space-y-3">
-        <button 
-          type="button" 
-          id="btn-go-services" 
-          class="w-full py-2.5 bg-transparent border border-stone-700 hover:border-brand-brown text-stone-300 hover:text-brand-white rounded-lg text-sm transition-colors flex items-center justify-center space-x-2 cursor-pointer"
-        >
-          <span>Ver Servicios de Barbería</span>
-          <i class="fa-solid fa-arrow-right text-xs text-brand-brown"></i>
-        </button>
-      </div>
-
-    </div>
-  </main>
-
-  <!-- SECCIÓN 2: VISTA DE SERVICIOS -->
-  <main id="services-section" class="section-view hidden flex-grow p-4 md:p-8 max-w-6xl mx-auto w-full">
+  <!-- ================= VISTA PRINCIPAL / LANDING PAGE ================= -->
+  <div id="home-section" class="section-view flex-grow">
     
-    <!-- Barra superior de navegación interna -->
+    <!-- Hero / Presentación -->
+    <section class="py-16 md:py-24 px-4 text-center max-w-4xl mx-auto border-b border-stone-800/50">
+      <span class="text-xs font-mono uppercase text-brand-brown tracking-widest bg-brand-brown/10 px-3 py-1 rounded-full border border-brand-brown/30">
+        Barbería & Grooming Tradicional
+      </span>
+      <h1 class="text-4xl md:text-6xl font-extrabold text-brand-white mt-6 mb-4 tracking-tight leading-tight">
+        Renueva tu estilo con la experiencia <span class="text-brand-brown">Catarsis</span>
+      </h1>
+      <p class="text-stone-400 text-sm md:text-base max-w-2xl mx-auto mb-8">
+        Más que un corte de cabello, ofrecemos un espacio de desconexión y detalle donde cada estilo cuenta una historia.
+      </p>
+      <button 
+        id="btn-hero-booking"
+        class="px-8 py-3.5 bg-brand-brown hover:bg-brand-brown-light text-brand-white font-bold rounded-lg uppercase tracking-wider text-xs transition-all shadow-lg cursor-pointer"
+      >
+        Reservar una Cita
+      </button>
+    </section>
+
+    <!-- SECCIÓN: QUIÉNES SOMOS -->
+    <section id="quienes-somos" class="py-16 px-4 max-w-5xl mx-auto border-b border-stone-800/50">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        <div class="space-y-4">
+          <h2 class="text-xs font-mono text-brand-brown uppercase tracking-widest">Nuestra Filosofía</h2>
+          <h3 class="text-2xl md:text-3xl font-bold text-brand-white">¿Quiénes Somos?</h3>
+          <p class="text-xs md:text-sm text-stone-400 leading-relaxed">
+            Catarsis nació de la pasión por la barbería clásica combinada con las tendencias modernas. Creemos que la imagen personal de un hombre es su carta de presentación más valiosa.
+          </p>
+          <p class="text-xs md:text-sm text-stone-400 leading-relaxed">
+            Nuestro equipo de barberos profesionales está comprometido a brindarte una atención detallada, escuchando tus gustos y asesorándote para lograr el mejor resultado.
+          </p>
+        </div>
+        <div class="bg-stone-900 border border-stone-800 rounded-2xl p-8 text-center space-y-6">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="p-4 bg-stone-950 rounded-xl border border-stone-800">
+              <span class="block text-2xl font-bold text-brand-brown">5+</span>
+              <span class="text-[11px] text-stone-400 uppercase">Años de experiencia</span>
+            </div>
+            <div class="p-4 bg-stone-950 rounded-xl border border-stone-800">
+              <span class="block text-2xl font-bold text-brand-brown">100%</span>
+              <span class="text-[11px] text-stone-400 uppercase">Clientes Satisfechos</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN: SERVICIOS DESTACADOS -->
+    <section id="destacados" class="py-16 px-4 max-w-5xl mx-auto border-b border-stone-800/50">
+      <div class="text-center mb-12">
+        <h2 class="text-xs font-mono text-brand-brown uppercase tracking-widest mb-2">Lo más solicitado</h2>
+        <h3 class="text-2xl md:text-3xl font-bold text-brand-white">Servicios Destacados</h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-stone-900 border border-stone-800 rounded-xl p-6 flex justify-between items-center hover:border-brand-brown/50 transition-all">
+          <div>
+            <h4 class="text-base font-bold text-brand-white">Corte Catarsis Classic</h4>
+            <p class="text-xs text-stone-400 mt-1">Corte personalizado + peinado con productos premium.</p>
+            <span class="text-xs font-mono text-brand-brown mt-2 block">30 minutos</span>
+          </div>
+          <span class="text-lg font-bold text-brand-white bg-stone-950 px-3 py-1.5 rounded-lg border border-stone-800">$250 MXN</span>
+        </div>
+
+        <div class="bg-stone-900 border border-stone-800 rounded-xl p-6 flex justify-between items-center hover:border-brand-brown/50 transition-all">
+          <div>
+            <h4 class="text-base font-bold text-brand-white">Combo Catarsis Full</h4>
+            <p class="text-xs text-stone-400 mt-1">Corte de cabello + ritual de barba con toalla caliente.</p>
+            <span class="text-xs font-mono text-brand-brown mt-2 block">50 minutos</span>
+          </div>
+          <span class="text-lg font-bold text-brand-white bg-stone-950 px-3 py-1.5 rounded-lg border border-stone-800">$380 MXN</span>
+        </div>
+      </div>
+
+      <div class="text-center mt-8">
+        <button 
+          id="btn-view-all-services"
+          class="text-xs text-brand-brown hover:text-brand-brown-light font-bold uppercase tracking-wider underline cursor-pointer"
+        >
+          Ver todos los servicios →
+        </button>
+      </div>
+    </section>
+
+    <!-- SECCIÓN: NUESTRO TRABAJO / GALERÍA -->
+    <section id="galeria" class="py-16 px-4 max-w-5xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-xs font-mono text-brand-brown uppercase tracking-widest mb-2">Galería</h2>
+        <h3 class="text-2xl md:text-3xl font-bold text-brand-white">Nuestro Trabajo</h3>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-stone-900 aspect-square rounded-xl border border-stone-800 flex flex-col items-center justify-center text-stone-600 hover:text-brand-brown hover:border-brand-brown transition-all">
+          <i class="fa-solid fa-scissors text-3xl mb-2"></i>
+          <span class="text-[11px] uppercase tracking-wider text-stone-400">Fade Perfecto</span>
+        </div>
+        <div class="bg-stone-900 aspect-square rounded-xl border border-stone-800 flex flex-col items-center justify-center text-stone-600 hover:text-brand-brown hover:border-brand-brown transition-all">
+          <i class="fa-solid fa-user-ninja text-3xl mb-2"></i>
+          <span class="text-[11px] uppercase tracking-wider text-stone-400">Perfilado Barba</span>
+        </div>
+        <div class="bg-stone-900 aspect-square rounded-xl border border-stone-800 flex flex-col items-center justify-center text-stone-600 hover:text-brand-brown hover:border-brand-brown transition-all">
+          <i class="fa-solid fa-spa text-3xl mb-2"></i>
+          <span class="text-[11px] uppercase tracking-wider text-stone-400">Tratamiento Facial</span>
+        </div>
+        <div class="bg-stone-900 aspect-square rounded-xl border border-stone-800 flex flex-col items-center justify-center text-stone-600 hover:text-brand-brown hover:border-brand-brown transition-all">
+          <i class="fa-solid fa-wand-magic-sparkles text-3xl mb-2"></i>
+          <span class="text-[11px] uppercase tracking-wider text-stone-400">Styling & Finish</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ================= VISTA: CATÁLOGO COMPLETO DE SERVICIOS ================= -->
+  <main id="services-section" class="section-view hidden flex-grow p-4 md:p-8 max-w-6xl mx-auto w-full">
     <div class="flex items-center justify-between mb-8 pb-4 border-b border-stone-800">
       <div>
         <h2 class="text-2xl font-bold text-brand-white">Nuestros Servicios</h2>
-        <p class="text-sm text-stone-400">Selecciona los cortes o tratamientos que deseas</p>
+        <p class="text-xs text-stone-400">Selecciona el servicio que deseas agendar</p>
       </div>
       <button 
-        id="btn-back-login" 
+        id="btn-back-home" 
         class="text-xs text-stone-400 hover:text-brand-brown transition-colors flex items-center space-x-2 border border-stone-800 px-3 py-2 rounded-lg cursor-pointer"
       >
         <i class="fa-solid fa-arrow-left"></i>
-        <span>Volver al inicio</span>
+        <span>Volver a la página principal</span>
       </button>
     </div>
 
-    <!-- Filtros de categoría -->
-    <div class="flex space-x-2 overflow-x-auto pb-4 mb-6 scrollbar-none">
-      <button class="filter-btn active bg-brand-brown text-brand-white px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap cursor-pointer" data-category="todos">
-        Todos
-      </button>
-      <button class="filter-btn bg-stone-900 text-stone-400 hover:text-brand-white px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap border border-stone-800 cursor-pointer" data-category="cabello">
-        Cabello
-      </button>
-      <button class="filter-btn bg-stone-900 text-stone-400 hover:text-brand-white px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap border border-stone-800 cursor-pointer" data-category="barba">
-        Barba
-      </button>
-      <button class="filter-btn bg-stone-900 text-stone-400 hover:text-brand-white px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap border border-stone-800 cursor-pointer" data-category="combos">
-        Combos Catarsis
-      </button>
-    </div>
-
-    <!-- Grid de Tarjetas de Servicios -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="services-grid">
-      
-      <!-- Tarjeta 1: Corte Clásico -->
-      <div class="service-card bg-stone-900 border border-stone-800 rounded-xl p-5 flex flex-col justify-between hover:border-brand-brown transition-all" data-category="cabello">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="service-card bg-stone-900 border border-stone-800 rounded-xl p-5 flex flex-col justify-between hover:border-brand-brown transition-all">
         <div>
           <div class="flex justify-between items-start mb-3">
             <span class="text-xs bg-stone-800 text-brand-brown px-2 py-1 rounded font-mono">30 min</span>
@@ -200,8 +212,7 @@
         </button>
       </div>
 
-      <!-- Tarjeta 2: Perfilado de Barba -->
-      <div class="service-card bg-stone-900 border border-stone-800 rounded-xl p-5 flex flex-col justify-between hover:border-brand-brown transition-all" data-category="barba">
+      <div class="service-card bg-stone-900 border border-stone-800 rounded-xl p-5 flex flex-col justify-between hover:border-brand-brown transition-all">
         <div>
           <div class="flex justify-between items-start mb-3">
             <span class="text-xs bg-stone-800 text-brand-brown px-2 py-1 rounded font-mono">25 min</span>
@@ -215,8 +226,7 @@
         </button>
       </div>
 
-      <!-- Tarjeta 3: Combo Catarsis -->
-      <div class="service-card bg-stone-900 border border-brand-brown/40 rounded-xl p-5 flex flex-col justify-between hover:border-brand-brown transition-all relative overflow-hidden" data-category="combos">
+      <div class="service-card bg-stone-900 border border-brand-brown/40 rounded-xl p-5 flex flex-col justify-between hover:border-brand-brown transition-all relative overflow-hidden">
         <div class="absolute top-0 right-0 bg-brand-brown text-brand-white text-[10px] font-bold px-3 py-1 rounded-bl">RECOMENDADO</div>
         <div>
           <div class="flex justify-between items-start mb-3 mt-1">
@@ -230,33 +240,99 @@
           Seleccionar Cita
         </button>
       </div>
-
-      <!-- Tarjeta 4: Exfoliación Facial -->
-      <div class="service-card bg-stone-900 border border-stone-800 rounded-xl p-5 flex flex-col justify-between hover:border-brand-brown transition-all" data-category="combos">
-        <div>
-          <div class="flex justify-between items-start mb-3">
-            <span class="text-xs bg-stone-800 text-brand-brown px-2 py-1 rounded font-mono">20 min</span>
-            <span class="text-lg font-bold text-brand-white">$150 MXN</span>
-          </div>
-          <h3 class="text-lg font-bold text-brand-white mb-2">Mascarilla & Exfoliación</h3>
-          <p class="text-xs text-stone-400 mb-4">Limpieza facial profunda con mascarilla negra de carbón activo y exfoliación revitalizante.</p>
-        </div>
-        <button class="select-service-btn w-full py-2.5 bg-stone-800 hover:bg-brand-brown text-stone-200 hover:text-brand-white rounded-lg text-xs font-bold uppercase transition-colors cursor-pointer">
-          Seleccionar Cita
-        </button>
-      </div>
-
     </div>
   </main>
+
+  <!-- ================= MODAL / OVERLAY LOGIN (ESTILO GLASS) ================= -->
+  <div id="login-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-cover bg-center bg-no-repeat" style="background-image: linear-gradient(to bottom, rgba(18, 18, 18, 0.8), rgba(28, 25, 23, 0.9)), url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=1600');">
+    
+    <!-- Tarjeta Translúcida (Efecto Cristal Esmerilado) -->
+    <div class="w-full max-w-md bg-stone-900/50 backdrop-blur-md border border-stone-700/60 rounded-2xl shadow-2xl p-8 my-8 relative text-brand-white">
+      
+      <!-- Botón Cerrar -->
+      <button 
+        id="btn-close-login"
+        class="absolute top-4 right-4 text-stone-400 hover:text-brand-white text-xl cursor-pointer transition-colors"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- Logo e Idioma/Estilo -->
+      <div class="text-center mb-8">
+        <div class="w-16 h-16 bg-brand-brown/20 border border-brand-brown/60 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg">
+          <i class="fa-solid fa-scissors text-2xl text-brand-brown"></i>
+        </div>
+        <h2 class="text-2xl font-extrabold uppercase tracking-widest text-brand-white">Inicio  de Sesion</h2>
+        <p class="text-xs text-stone-300 mt-1">Catarsis Barbería & Grooming</p>
+      </div>
+
+      <!-- Formulario -->
+      <form id="login-form" class="space-y-5">
+        <div>
+          <label for="email" class="block text-xs font-semibold text-stone-200 uppercase tracking-wider mb-2">
+            Correo
+          </label>
+          <input 
+            type="email" 
+            id="email" 
+            required
+            placeholder="Digite o e-mail" 
+            class="w-full px-4 py-3 bg-stone-100/90 border border-stone-300 rounded-lg text-sm text-stone-900 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-brand-brown focus:bg-white transition-all shadow-inner"
+          >
+        </div>
+
+        <div>
+          <label for="password" class="block text-xs font-semibold text-stone-200 uppercase tracking-wider mb-2">
+            Contraseña
+          </label>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="password" 
+              required
+              placeholder="Digite a sua senha" 
+              class="w-full px-4 py-3 bg-stone-100/90 border border-stone-300 rounded-lg text-sm text-stone-900 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-brand-brown focus:bg-white transition-all shadow-inner"
+            >
+            <button 
+              type="button" 
+              id="toggle-password" 
+              class="absolute inset-y-0 right-0 flex items-center pr-3 text-stone-600 hover:text-stone-900 cursor-pointer"
+            >
+              <i class="fa-solid fa-eye" id="eye-icon"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-2">
+          <button 
+            type="submit" 
+            class="px-8 py-2.5 bg-brand-dark/90 hover:bg-brand-black border border-stone-700 text-brand-white font-bold rounded-lg shadow-lg hover:shadow-stone-900/50 text-xs uppercase tracking-wider transition-all cursor-pointer"
+          >
+            Entrar
+          </button>
+
+          <a href="#" class="text-xs text-stone-300 hover:text-brand-brown transition-colors">
+            Olvido su contraseña?
+          
+          </a>
+        </div>
+
+        <div class="text-center pt-4 border-t border-stone-700/50">
+          <a href="#" class="text-xs text-stone-300 hover:text-brand-brown transition-colors">
+            Crear una cuenta
+          </a>
+        </div>
+      </form>
+
+    </div>
+  </div>
 
   <!-- Pie de página -->
   <footer class="p-4 text-center text-xs text-stone-500 border-t border-stone-800 bg-brand-dark/30">
     <p>&copy; 2026 Catarsis Barbería. Todos los derechos reservados.</p>
   </footer>
 
-  <!-- Script JS Carga Correcta -->
+  <!-- Script JS Local -->
   <script src="js/script.js"></script>
-  <!-- Alternativa por si tu script.js está en la misma carpeta raíz que index.html -->
-  <script src="script.js"></script>
 </body>
 </html>
