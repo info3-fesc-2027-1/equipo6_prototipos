@@ -42,36 +42,20 @@
         <p class="text-[10px] text-stone-400 tracking-wider uppercase">Barbería & Grooming</p>
       </div>
     </div>
+    <p class="text-xs text-stone-400 mt-1 tracking-wider uppercase">Barbería & Grooming</p>
+  </header>
 
-    <!-- Menú de Navegación Principal -->
-    <nav class="hidden md:flex items-center space-x-6 text-xs font-semibold tracking-wider uppercase text-stone-300">
-      <a href="#inicio" class="hover:text-brand-brown transition-colors">Inicio</a>
-      <a href="#servicios" class="hover:text-brand-brown transition-colors">Servicios</a>
-      <a href="#agendar" class="hover:text-brand-brown transition-colors">Reservar</a>
-      <a href="#contacto" class="hover:text-brand-brown transition-colors">Contacto</a>
-    </nav>
-
-    <!-- Botón de Iniciar Sesión en la Esquina Superior Derecha -->
-    <div class="relative">
-      <button 
-        id="login-btn" 
-        class="flex items-center space-x-2 px-4 py-2 bg-stone-800 hover:bg-brand-brown border border-stone-700 hover:border-brand-brown rounded-full text-xs font-semibold tracking-wider transition-all duration-200"
-      >
-        <i class="fa-solid fa-user text-brand-brown group-hover:text-white"></i>
-        <span>Iniciar Sesión</span>
-      </button>
-
-      <!-- Menú Desplegable / Popover de Inicio de Sesión -->
-      <div 
-        id="login-dropdown" 
-        class="hidden absolute right-0 mt-3 w-80 bg-stone-900 border border-stone-800 rounded-2xl shadow-2xl p-6 z-50"
-      >
-        <div class="flex justify-between items-center mb-4 pb-2 border-b border-stone-800">
-          <h3 class="text-sm font-bold text-brand-white uppercase tracking-wider">Acceso Clientes</h3>
-          <button id="close-login-dropdown" class="text-stone-400 hover:text-white text-sm">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
+  <!-- SECCIÓN 1: VISTA DE INICIO / LOGIN -->
+  <main id="login-section" class="section-view flex-grow flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-stone-900 border border-stone-800 rounded-2xl shadow-2xl p-8 my-8">
+      
+      <div class="text-center mb-8">
+        <div class="w-20 h-20 bg-brand-brown/10 border border-brand-brown rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="fa-solid fa-user text-3xl text-brand-brown"></i>
         </div>
+        <h2 class="text-2xl font-bold text-brand-white">Bienvenido</h2>
+        <p class="text-sm text-stone-400 mt-1">Inicia sesión para gestionar tus citas</p>
+      </div>
 
         <form id="login-form" class="space-y-4">
           <div>
@@ -120,39 +104,20 @@
             <a href="#" class="text-brand-brown hover:underline">¿Olvidaste clave?</a>
           </div>
 
-          <button 
-            type="submit" 
-            class="w-full py-2.5 bg-brand-brown hover:bg-brand-brown-light text-white font-bold rounded-lg text-xs uppercase tracking-wider transition-all"
-          >
-            Entrar
-          </button>
-        </form>
-      </div>
-    </div>
-  </header>
+        <button 
+          type="submit" 
+          class="w-full py-3.5 bg-brand-brown hover:bg-brand-brown-light text-brand-white font-bold rounded-lg shadow-lg hover:shadow-brand-brown/20 transition-all duration-200 uppercase tracking-wider text-sm mt-2"
+        >
+          Iniciar Sesión
+        </button>
+      </form>
 
-  <!-- PÁGINA PRINCIPAL / SECCIONES -->
-  <main class="flex-grow space-y-20 pb-16">
-
-    <!-- HERO SECTION -->
-    <section id="inicio" class="relative py-20 px-6 text-center bg-gradient-to-b from-stone-900 via-brand-black to-brand-black border-b border-stone-800">
-      <div class="max-w-3xl mx-auto space-y-6">
-        <span class="inline-block px-3 py-1 bg-brand-brown/10 border border-brand-brown/30 rounded-full text-brand-brown text-xs font-semibold uppercase tracking-widest">
-          Estilo & Grooming Masculino
-        </span>
-        <h2 class="text-4xl sm:text-6xl font-extrabold text-brand-white uppercase tracking-tight leading-tight">
-          Más que un corte, una experiencia de <span class="text-brand-brown">Catarsis.</span>
-        </h2>
-        <p class="text-stone-400 text-sm sm:text-base max-w-xl mx-auto">
-          Tradición y vanguardia en el cuidado masculino. Disfruta de una atención personalizada en un ambiente exclusivo.
-        </p>
-        <div class="pt-4 flex flex-wrap justify-center gap-4">
-          <a href="#agendar" class="px-6 py-3 bg-brand-brown hover:bg-brand-brown-light text-brand-white text-xs font-bold uppercase tracking-wider rounded-lg transition-all shadow-lg">
-            <i class="fa-solid fa-calendar-plus mr-2"></i>Agendar Turno
-          </a>
-          <a href="#servicios" class="px-6 py-3 bg-stone-800 hover:bg-stone-700 text-stone-300 text-xs font-bold uppercase tracking-wider rounded-lg transition-all border border-stone-700">
-            Ver Servicios
-          </a>
+      <div class="relative my-6">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-stone-800"></div>
+        </div>
+        <div class="relative flex justify-center text-xs uppercase">
+          <span class="bg-stone-900 px-3 text-stone-500">O entra como invitado</span>
         </div>
       </div>
     </section>
