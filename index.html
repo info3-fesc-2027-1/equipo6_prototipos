@@ -3,18 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catarsis Barbería</title>
+  <title>Catarsis Barbería - Inicio & Citas</title>
   
-  <!-- Font Awesome Icons -->
+  <!-- Font Awesome para Iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS por CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Estilos Locales -->
-  <link rel="stylesheet" href="css/styles.css">
-
-  <!-- Configuración de Colores Catarsis -->
   <script>
     tailwind.config = {
       theme: {
@@ -34,153 +29,157 @@
     }
   </script>
 </head>
-<body class="bg-brand-black text-brand-white font-sans min-h-screen flex flex-col justify-between">
+<body class="bg-brand-black text-brand-white font-sans min-h-screen flex flex-col justify-between selection:bg-brand-brown selection:text-white">
 
-  <!-- ENCABEZADO / NAV BAR -->
-  <header class="p-4 md:px-8 border-b border-stone-800 bg-brand-dark/80 backdrop-blur-md sticky top-0 z-40 flex items-center justify-between">
-    <div class="inline-flex items-center space-x-3 cursor-pointer" id="brand-logo">
+  <!-- ENCABEZADO / NAVBAR -->
+  <header class="sticky top-0 z-40 bg-stone-900/95 backdrop-blur-md border-b border-stone-800 px-6 py-4 flex items-center justify-between">
+    
+    <!-- Branding / Logo -->
+    <div class="flex items-center space-x-3">
       <i class="fa-solid fa-scissors text-2xl text-brand-brown"></i>
-      <span class="text-2xl font-extrabold tracking-widest text-brand-white uppercase">
-        Catarsis
-      </span>
+      <div>
+        <h1 class="text-xl font-extrabold tracking-widest text-brand-white uppercase leading-none">Catarsis</h1>
+        <p class="text-[10px] text-stone-400 tracking-wider uppercase">Barbería & Grooming</p>
+      </div>
     </div>
 
-    <!-- Contenedor dinámico de sesión en header -->
-    <div class="flex items-center space-x-4">
-      <div id="user-info-header" class="hidden flex items-center space-x-3">
-        <span id="user-display-name" class="text-xs font-semibold text-brand-brown"></span>
-        <button id="btn-logout" class="px-3 py-1.5 border border-stone-700 hover:border-red-500 text-stone-400 hover:text-red-400 text-xs rounded-lg transition-colors">
-          Cerrar Sesión
-        </button>
-      </div>
+    <!-- Menú de Navegación Principal -->
+    <nav class="hidden md:flex items-center space-x-6 text-xs font-semibold tracking-wider uppercase text-stone-300">
+      <a href="#inicio" class="hover:text-brand-brown transition-colors">Inicio</a>
+      <a href="#servicios" class="hover:text-brand-brown transition-colors">Servicios</a>
+      <a href="#agendar" class="hover:text-brand-brown transition-colors">Reservar</a>
+      <a href="#contacto" class="hover:text-brand-brown transition-colors">Contacto</a>
+    </nav>
 
+    <!-- Botón de Iniciar Sesión en la Esquina Superior Derecha -->
+    <div class="relative">
       <button 
-        id="btn-open-login" 
-        class="px-5 py-2.5 bg-brand-brown hover:bg-brand-brown-light text-brand-white font-bold text-xs rounded-lg uppercase tracking-wider transition-all shadow-md flex items-center space-x-2 cursor-pointer"
+        id="login-btn" 
+        class="flex items-center space-x-2 px-4 py-2 bg-stone-800 hover:bg-brand-brown border border-stone-700 hover:border-brand-brown rounded-full text-xs font-semibold tracking-wider transition-all duration-200"
       >
-        <i class="fa-solid fa-user text-xs"></i>
+        <i class="fa-solid fa-user text-brand-brown group-hover:text-white"></i>
         <span>Iniciar Sesión</span>
       </button>
+
+      <!-- Menú Desplegable / Popover de Inicio de Sesión -->
+      <div 
+        id="login-dropdown" 
+        class="hidden absolute right-0 mt-3 w-80 bg-stone-900 border border-stone-800 rounded-2xl shadow-2xl p-6 z-50"
+      >
+        <div class="flex justify-between items-center mb-4 pb-2 border-b border-stone-800">
+          <h3 class="text-sm font-bold text-brand-white uppercase tracking-wider">Acceso Clientes</h3>
+          <button id="close-login-dropdown" class="text-stone-400 hover:text-white text-sm">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <form id="login-form" class="space-y-4">
+          <div>
+            <label for="email" class="block text-[11px] font-semibold text-stone-300 uppercase tracking-wider mb-1">
+              Correo Electrónico
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-stone-500 text-xs">
+                <i class="fa-solid fa-envelope"></i>
+              </span>
+              <input 
+                type="email" 
+                id="email" 
+                required
+                placeholder="cliente@catarsis.com" 
+                class="w-full pl-9 pr-3 py-2 bg-stone-950 border border-stone-800 rounded-lg text-brand-white text-xs placeholder-stone-600 focus:outline-none focus:border-brand-brown"
+              >
+            </div>
+          </div>
+
+          <div>
+            <label for="password" class="block text-[11px] font-semibold text-stone-300 uppercase tracking-wider mb-1">
+              Contraseña
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-stone-500 text-xs">
+                <i class="fa-solid fa-lock"></i>
+              </span>
+              <input 
+                type="password" 
+                id="password" 
+                required
+                placeholder="••••••••" 
+                class="w-full pl-9 pr-8 py-2 bg-stone-950 border border-stone-800 rounded-lg text-brand-white text-xs placeholder-stone-600 focus:outline-none focus:border-brand-brown"
+              >
+              <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 pr-3 flex items-center text-stone-500 text-xs">
+                <i class="fa-solid fa-eye" id="eye-icon"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-[11px]">
+            <label class="flex items-center text-stone-400 cursor-pointer">
+              <input type="checkbox" class="accent-brand-brown rounded mr-1"> Recordarme
+            </label>
+            <a href="#" class="text-brand-brown hover:underline">¿Olvidaste clave?</a>
+          </div>
+
+          <button 
+            type="submit" 
+            class="w-full py-2.5 bg-brand-brown hover:bg-brand-brown-light text-white font-bold rounded-lg text-xs uppercase tracking-wider transition-all"
+          >
+            Entrar
+          </button>
+        </form>
+      </div>
     </div>
   </header>
 
-  <!-- ================= VISTA 1: LANDING PAGE PUBLIC ================= -->
-  <div id="home-section" class="section-view flex-grow">
-    <section class="py-16 md:py-24 px-4 text-center max-w-4xl mx-auto border-b border-stone-800/50">
-      <span class="text-xs font-mono uppercase text-brand-brown tracking-widest bg-brand-brown/10 px-3 py-1 rounded-full border border-brand-brown/30">
-        Barbería & Grooming Tradicional
-      </span>
-      <h1 class="text-4xl md:text-6xl font-extrabold text-brand-white mt-6 mb-4 tracking-tight leading-tight">
-        Renueva tu estilo con la experiencia <span class="text-brand-brown">Catarsis</span>
-      </h1>
-      <p class="text-stone-400 text-sm md:text-base max-w-2xl mx-auto mb-8">
-        Espacio exclusivo de estética masculina, productos premium y formación profesional.
-      </p>
-      <button 
-        id="btn-hero-booking"
-        class="px-8 py-3.5 bg-brand-brown hover:bg-brand-brown-light text-brand-white font-bold rounded-lg uppercase tracking-wider text-xs transition-all shadow-lg cursor-pointer"
-      >
-        Ingresar al Portal
-      </button>
+  <!-- PÁGINA PRINCIPAL / SECCIONES -->
+  <main class="flex-grow space-y-20 pb-16">
+
+    <!-- HERO SECTION -->
+    <section id="inicio" class="relative py-20 px-6 text-center bg-gradient-to-b from-stone-900 via-brand-black to-brand-black border-b border-stone-800">
+      <div class="max-w-3xl mx-auto space-y-6">
+        <span class="inline-block px-3 py-1 bg-brand-brown/10 border border-brand-brown/30 rounded-full text-brand-brown text-xs font-semibold uppercase tracking-widest">
+          Estilo & Grooming Masculino
+        </span>
+        <h2 class="text-4xl sm:text-6xl font-extrabold text-brand-white uppercase tracking-tight leading-tight">
+          Más que un corte, una experiencia de <span class="text-brand-brown">Catarsis.</span>
+        </h2>
+        <p class="text-stone-400 text-sm sm:text-base max-w-xl mx-auto">
+          Tradición y vanguardia en el cuidado masculino. Disfruta de una atención personalizada en un ambiente exclusivo.
+        </p>
+        <div class="pt-4 flex flex-wrap justify-center gap-4">
+          <a href="#agendar" class="px-6 py-3 bg-brand-brown hover:bg-brand-brown-light text-brand-white text-xs font-bold uppercase tracking-wider rounded-lg transition-all shadow-lg">
+            <i class="fa-solid fa-calendar-plus mr-2"></i>Agendar Turno
+          </a>
+          <a href="#servicios" class="px-6 py-3 bg-stone-800 hover:bg-stone-700 text-stone-300 text-xs font-bold uppercase tracking-wider rounded-lg transition-all border border-stone-700">
+            Ver Servicios
+          </a>
+        </div>
+      </div>
     </section>
-  </div>
 
-  <!-- ================= VISTA 2: DASHBOARD CLIENTE (POST-LOGIN) ================= -->
-  <main id="dashboard-section" class="section-view hidden flex-grow p-4 md:p-8 max-w-7xl mx-auto w-full">
-    
-    <!-- Encabezado del Dashboard -->
-    <div class="mb-8 pb-4 border-b border-stone-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
-      <div>
-        <h2 class="text-3xl font-extrabold text-brand-white">Portal de Miembros Catarsis</h2>
-        <p class="text-xs text-stone-400">Reserva servicios, adquiere productos para el cuidado o inscríbete a nuestras academias.</p>
+    <!-- SECCIÓN DE SERVICIOS (AMPLIADA Y MÁS GRANDE) -->
+    <section id="servicios" class="max-w-7xl mx-auto px-6 py-8">
+      <div class="text-center mb-14">
+        <span class="text-brand-brown text-xs font-bold tracking-widest uppercase">Catálogo Grooming</span>
+        <h3 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-widest text-brand-white mt-1">Nuestros Servicios</h3>
+        <p class="text-sm text-stone-400 mt-2 max-w-lg mx-auto">Técnicas de precisión profesional con productos de máxima gama para tu cuidado personal.</p>
       </div>
-      
-      <!-- Pestañas de Navegación del Dashboard -->
-      <div class="flex space-x-2 bg-stone-900 p-1.5 rounded-xl border border-stone-800 overflow-x-auto">
-        <button class="dash-tab active px-4 py-2 bg-brand-brown text-brand-white rounded-lg text-xs font-bold transition-all" data-tab="servicios">
-          <i class="fa-solid fa-scissors mr-1.5"></i> Servicios
-        </button>
-        <button class="dash-tab px-4 py-2 text-stone-400 hover:text-brand-white rounded-lg text-xs font-bold transition-all" data-tab="productos">
-          <i class="fa-solid fa-pump-soap mr-1.5"></i> Productos
-        </button>
-        <button class="dash-tab px-4 py-2 text-stone-400 hover:text-brand-white rounded-lg text-xs font-bold transition-all" data-tab="cursos">
-          <i class="fa-solid fa-graduation-cap mr-1.5"></i> Cursos
-        </button>
-        <button class="dash-tab px-4 py-2 text-stone-400 hover:text-brand-white rounded-lg text-xs font-bold transition-all" data-tab="mas">
-          <i class="fa-solid fa-star mr-1.5"></i> Más
-        </button>
-      </div>
-    </div>
 
-    <!-- TAB 1: SERVICIOS -->
-    <div id="tab-servicios" class="dash-content space-y-6">
-      <h3 class="text-lg font-bold text-brand-white">Nuestros Servicios Exclusivos</h3>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-stone-900 border border-stone-800 rounded-xl p-5 flex flex-col justify-between">
+      <!-- Tarjetas de Servicios con Mayor Tamaño y Padding -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Tarjeta 1 -->
+        <div class="bg-stone-900 border border-stone-800 p-8 sm:p-10 rounded-3xl hover:border-brand-brown transition-all duration-300 shadow-xl flex flex-col justify-between group">
           <div>
-            <div class="flex justify-between items-start mb-3">
-              <span class="text-xs bg-stone-800 text-brand-brown px-2 py-1 rounded font-mono">30 min</span>
-              <span class="text-lg font-bold text-brand-white">$250 MXN</span>
+            <div class="w-16 h-16 bg-brand-brown/10 border border-brand-brown/40 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-brown group-hover:text-white transition-all">
+              <i class="fa-solid fa-scissors text-3xl text-brand-brown group-hover:text-white"></i>
             </div>
-            <h4 class="text-base font-bold text-brand-white mb-2">Corte Catarsis Classic</h4>
-            <p class="text-xs text-stone-400 mb-4">Corte de cabello personalizado, lavado y peinado con pomada mate.</p>
+            <h4 class="text-2xl font-extrabold text-brand-white mb-3">Corte Tradicional</h4>
+            <p class="text-stone-400 text-sm leading-relaxed mb-6">
+              Lavado de cabello con masaje capilar, diagnóstico de estilo, corte personalizado a tijera o máquina y peinado final con fijación profesional.
+            </p>
           </div>
-          <button class="w-full py-2 bg-brand-brown hover:bg-brand-brown-light text-brand-white font-bold rounded-lg text-xs uppercase transition-colors">Reservar Cita</button>
-        </div>
-
-        <div class="bg-stone-900 border border-stone-800 rounded-xl p-5 flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-start mb-3">
-              <span class="text-xs bg-stone-800 text-brand-brown px-2 py-1 rounded font-mono">25 min</span>
-              <span class="text-lg font-bold text-brand-white">$180 MXN</span>
-            </div>
-            <h4 class="text-base font-bold text-brand-white mb-2">Perfilado de Barba Ritual</h4>
-            <p class="text-xs text-stone-400 mb-4">Diseño a navaja con toalla caliente y aceites hidratantes.</p>
-          </div>
-          <button class="w-full py-2 bg-brand-brown hover:bg-brand-brown-light text-brand-white font-bold rounded-lg text-xs uppercase transition-colors">Reservar Cita</button>
-        </div>
-
-        <div class="bg-stone-900 border border-brand-brown/50 rounded-xl p-5 flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-start mb-3">
-              <span class="text-xs bg-stone-800 text-brand-brown px-2 py-1 rounded font-mono">50 min</span>
-              <span class="text-lg font-bold text-brand-white">$380 MXN</span>
-            </div>
-            <h4 class="text-base font-bold text-brand-white mb-2">Combo Catarsis Full</h4>
-            <p class="text-xs text-stone-400 mb-4">Corte de cabello completo + perfilado de barba ritual + bebida de cortesía.</p>
-          </div>
-          <button class="w-full py-2 bg-brand-brown hover:bg-brand-brown-light text-brand-white font-bold rounded-lg text-xs uppercase transition-colors">Reservar Cita</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB 2: PRODUCTOS -->
-    <div id="tab-productos" class="dash-content hidden space-y-6">
-      <h3 class="text-lg font-bold text-brand-white">Productos Grooming</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-        <div class="bg-stone-900 border border-stone-800 rounded-xl p-4 flex flex-col justify-between text-center">
-          <div class="w-full h-32 bg-stone-950 rounded-lg flex items-center justify-center mb-3">
-            <i class="fa-solid fa-jar text-4xl text-brand-brown"></i>
-          </div>
-          <h4 class="text-sm font-bold text-brand-white">Cera Mate Catarsis 100g</h4>
-          <span class="text-xs text-brand-brown font-mono my-2 block">$220 MXN</span>
-          <button class="w-full py-2 bg-stone-800 hover:bg-brand-brown text-stone-200 hover:text-brand-white rounded-lg text-xs font-bold uppercase transition-colors">Comprar</button>
-        </div>
-
-        <div class="bg-stone-900 border border-stone-800 rounded-xl p-4 flex flex-col justify-between text-center">
-          <div class="w-full h-32 bg-stone-950 rounded-lg flex items-center justify-center mb-3">
-            <i class="fa-solid fa-bottle-droplet text-4xl text-brand-brown"></i>
-          </div>
-          <h4 class="text-sm font-bold text-brand-white">Aceite para Barba 30ml</h4>
-          <span class="text-xs text-brand-brown font-mono my-2 block">$190 MXN</span>
-          <button class="w-full py-2 bg-stone-800 hover:bg-brand-brown text-stone-200 hover:text-brand-white rounded-lg text-xs font-bold uppercase transition-colors">Comprar</button>
-        </div>
-
-        <div class="bg-stone-900 border border-stone-800 rounded-xl p-4 flex flex-col justify-between text-center">
-          <div class="w-full h-32 bg-stone-950 rounded-lg flex items-center justify-center mb-3">
-            <i class="fa-solid fa-pump-soap text-4xl text-brand-brown"></i>
-          </div>
-          <h4 class="text-sm font-bold text-brand-white">Shampoo Anticaída 250ml</h4>
+          <h4 class="text-sm font-bold text-brand-white">Champú Anticaída 250ml</h4>
           <span class="text-xs text-brand-brown font-mono my-2 block">$280 MXN</span>
           <button class="w-full py-2 bg-stone-800 hover:bg-brand-brown text-stone-200 hover:text-brand-white rounded-lg text-xs font-bold uppercase transition-colors">Comprar</button>
         </div>
@@ -196,162 +195,191 @@
       </div>
     </div>
 
-    <!-- TAB 3: CURSOS -->
-    <div id="tab-cursos" class="dash-content hidden space-y-6">
-      <h3 class="text-lg font-bold text-brand-white">Academy Catarsis</h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="bg-stone-900 border border-stone-800 rounded-xl p-6 flex flex-col justify-between">
+        <!-- Tarjeta 2 -->
+        <div class="bg-stone-900 border border-stone-800 p-8 sm:p-10 rounded-3xl hover:border-brand-brown transition-all duration-300 shadow-xl flex flex-col justify-between group">
           <div>
-            <span class="text-[10px] bg-brand-brown/20 text-brand-brown px-2 py-1 rounded font-bold uppercase">Nivel Básico a Avanzado</span>
-            <h4 class="text-lg font-bold text-brand-white mt-3 mb-2">Masterclass Fade & Styling</h4>
-            <p class="text-xs text-stone-400 mb-4">Aprende técnicas avanzadas de degradados, perfilados y uso de navaja tradicional en 4 semanas presenciales.</p>
+            <div class="w-16 h-16 bg-brand-brown/10 border border-brand-brown/40 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-brown group-hover:text-white transition-all">
+              <i class="fa-solid fa-spray-can text-3xl text-brand-brown group-hover:text-white"></i>
+            </div>
+            <h4 class="text-2xl font-extrabold text-brand-white mb-3">Ritual de Barba</h4>
+            <p class="text-stone-400 text-sm leading-relaxed mb-6">
+              Afeitado y diseño de barba al estilo clásico con toallas calientes, aceites esenciales de hidratación, navaja libre y bálsamo refrescante.
+            </p>
           </div>
-          <div class="flex items-center justify-between border-t border-stone-800 pt-4">
-            <span class="text-sm font-bold text-brand-white">$3,500 MXN</span>
-            <button class="px-5 py-2 bg-brand-brown hover:bg-brand-brown-light text-brand-white rounded-lg text-xs font-bold uppercase">Inscribirme</button>
+          <div class="pt-4 border-t border-stone-800/80 flex items-center justify-between">
+            <span class="text-stone-400 text-xs uppercase tracking-wider font-semibold">Precio</span>
+            <span class="text-brand-accent text-xl font-extrabold">$200 MXN</span>
           </div>
         </div>
 
-        <div class="bg-stone-900 border border-stone-800 rounded-xl p-6 flex flex-col justify-between">
+        <!-- Tarjeta 3 -->
+        <div class="bg-stone-900 border border-stone-800 p-8 sm:p-10 rounded-3xl hover:border-brand-brown transition-all duration-300 shadow-xl flex flex-col justify-between group">
           <div>
-            <span class="text-[10px] bg-brand-brown/20 text-brand-brown px-2 py-1 rounded font-bold uppercase">Taller Intensivo</span>
-            <h4 class="text-lg font-bold text-brand-white mt-3 mb-2">Grooming & Tratamientos de Barba</h4>
-            <p class="text-xs text-stone-400 mb-4">Especialización en rituales de toalla caliente, hidratación y cuidado de piel masculina.</p>
+            <div class="w-16 h-16 bg-brand-brown/10 border border-brand-brown/40 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-brown group-hover:text-white transition-all">
+              <i class="fa-solid fa-crown text-3xl text-brand-brown group-hover:text-white"></i>
+            </div>
+            <h4 class="text-2xl font-extrabold text-brand-white mb-3">Combo Catarsis</h4>
+            <p class="text-stone-400 text-sm leading-relaxed mb-6">
+              La experiencia completa de la casa: Corte exclusivo, ritual completo de barba, perfilado de cejas y tratamiento facial exfoliante express.
+            </p>
           </div>
-          <div class="flex items-center justify-between border-t border-stone-800 pt-4">
-            <span class="text-sm font-bold text-brand-white">$1,800 MXN</span>
-            <button class="px-5 py-2 bg-brand-brown hover:bg-brand-brown-light text-brand-white rounded-lg text-xs font-bold uppercase">Inscribirme</button>
+          <div class="pt-4 border-t border-stone-800/80 flex items-center justify-between">
+            <span class="text-stone-400 text-xs uppercase tracking-wider font-semibold">Precio VIP</span>
+            <span class="text-brand-accent text-xl font-extrabold">$400 MXN</span>
           </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- APARTADO SUTIL PARA AGENDAR CITAS EN LA PÁGINA PRINCIPAL -->
+    <section id="agendar" class="max-w-4xl mx-auto px-6">
+      <div class="bg-stone-900 border border-stone-800 rounded-2xl shadow-2xl p-6 sm:p-10 relative overflow-hidden">
+        <div class="absolute -top-10 -right-10 w-40 h-40 bg-brand-brown/5 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="flex items-center space-x-3 mb-6 pb-4 border-b border-stone-800">
+          <div class="w-10 h-10 bg-brand-brown/10 border border-brand-brown rounded-full flex items-center justify-center text-brand-brown">
+            <i class="fa-solid fa-calendar-check text-lg"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-brand-white">Reserva tu Cita</h3>
+            <p class="text-xs text-stone-400">Selecciona tu horario preferido sin necesidad de registrarte</p>
+          </div>
+        </div>
+
+        <form id="booking-form" class="space-y-4">
+          <!-- Datos del cliente -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-stone-300 uppercase tracking-wider mb-1">Nombre Completo</label>
+              <input type="text" required placeholder="Tu nombre" class="w-full px-3 py-2.5 bg-stone-950 border border-stone-800 rounded-lg text-brand-white text-sm focus:outline-none focus:border-brand-brown">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-stone-300 uppercase tracking-wider mb-1">Teléfono / WhatsApp</label>
+              <input type="tel" required placeholder="55 1234 5678" class="w-full px-3 py-2.5 bg-stone-950 border border-stone-800 rounded-lg text-brand-white text-sm focus:outline-none focus:border-brand-brown">
+            </div>
+          </div>
+
+          <!-- Selección de Servicio y Barbero -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-stone-300 uppercase tracking-wider mb-1">Servicio</label>
+              <select required class="w-full px-3 py-2.5 bg-stone-950 border border-stone-800 rounded-lg text-brand-white text-sm focus:outline-none focus:border-brand-brown">
+                <option value="" disabled selected>Selecciona un servicio</option>
+                <option value="corte">Corte Tradicional - $250</option>
+                <option value="barba">Ritual de Barba - $200</option>
+                <option value="combo">Combo Catarsis - $400</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-stone-300 uppercase tracking-wider mb-1">Barbero</label>
+              <select required class="w-full px-3 py-2.5 bg-stone-950 border border-stone-800 rounded-lg text-brand-white text-sm focus:outline-none focus:border-brand-brown">
+                <option value="cualquiera">Cualquier barbero disponible</option>
+                <option value="barbero-1">Carlos "Master Cut"</option>
+                <option value="barbero-2">Mateo Grooming</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Fecha y Hora -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-stone-300 uppercase tracking-wider mb-1">Fecha</label>
+              <input type="date" required class="w-full px-3 py-2.5 bg-stone-950 border border-stone-800 rounded-lg text-brand-white text-sm focus:outline-none focus:border-brand-brown">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-stone-300 uppercase tracking-wider mb-1">Hora</label>
+              <select required class="w-full px-3 py-2.5 bg-stone-950 border border-stone-800 rounded-lg text-brand-white text-sm focus:outline-none focus:border-brand-brown">
+                <option value="" disabled selected>Selecciona horario</option>
+                <option value="10:00">10:00 AM</option>
+                <option value="11:30">11:30 AM</option>
+                <option value="13:00">01:00 PM</option>
+                <option value="15:00">03:00 PM</option>
+                <option value="16:30">04:30 PM</option>
+                <option value="18:00">06:00 PM</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Botón de Confirmación -->
+          <button 
+            type="submit" 
+            class="w-full py-3.5 bg-brand-brown hover:bg-brand-brown-light text-white font-bold rounded-lg shadow-lg hover:shadow-brand-brown/20 transition-all uppercase tracking-wider text-sm mt-2"
+          >
+            Confirmar Reserva
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- UBICACIÓN / CONTACTO -->
+    <section id="contacto" class="max-w-6xl mx-auto px-6 border-t border-stone-800 pt-16">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left text-xs text-stone-400">
+        <div>
+          <h4 class="text-sm font-bold text-brand-white uppercase mb-2">Ubicación</h4>
+          <p>Av. Principal #123, Col. Centro</p>
+          <p>Ciudad de México</p>
+        </div>
+        <div>
+          <h4 class="text-sm font-bold text-brand-white uppercase mb-2">Horarios</h4>
+          <p>Lunes a Sábado: 10:00 AM - 8:00 PM</p>
+          <p>Domingo: Cerrado</p>
+        </div>
+        <div>
+          <h4 class="text-sm font-bold text-brand-white uppercase mb-2">Contacto</h4>
+          <p>Teléfono: 55 1234 5678</p>
+          <p>Email: contacto@catarsis.com</p>
         </div>
       </div>
-    </div>
-
-    <!-- TAB 4: MÁS (Barberos y Membresías) -->
-    <div id="tab-mas" class="dash-content hidden space-y-6">
-      <h3 class="text-lg font-bold text-brand-white">Nuestros Barberos & Beneficios Club</h3>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-stone-900 border border-stone-800 rounded-xl p-5 text-center">
-          <div class="w-16 h-16 bg-stone-800 rounded-full flex items-center justify-center mx-auto mb-3 text-brand-brown text-2xl font-bold">MR</div>
-          <h4 class="text-sm font-bold text-brand-white">Marco Ramírez</h4>
-          <p class="text-xs text-stone-400 mt-1 mb-3">Especialista en Fades & Clásicos</p>
-          <span class="text-[11px] bg-stone-950 px-3 py-1 rounded-full border border-stone-800 text-stone-300">Silla 01</span>
-        </div>
-
-        <div class="bg-stone-900 border border-stone-800 rounded-xl p-5 text-center">
-          <div class="w-16 h-16 bg-stone-800 rounded-full flex items-center justify-center mx-auto mb-3 text-brand-brown text-2xl font-bold">DC</div>
-          <h4 class="text-sm font-bold text-brand-white">Daniel Castro</h4>
-          <p class="text-xs text-stone-400 mt-1 mb-3">Experto en Grooming & Barbas</p>
-          <span class="text-[11px] bg-stone-950 px-3 py-1 rounded-full border border-stone-800 text-stone-300">Silla 02</span>
-        </div>
-
-        <div class="bg-stone-900 border border-brand-brown/40 rounded-xl p-5 text-center bg-gradient-to-b from-stone-900 to-stone-950">
-          <i class="fa-solid fa-crown text-3xl text-brand-brown mb-2"></i>
-          <h4 class="text-sm font-bold text-brand-white">Membresía VIP Catarsis</h4>
-          <p class="text-xs text-stone-400 mt-1 mb-3">Cortes ilimitados + 20% de descuento en productos y cursos.</p>
-          <button class="w-full py-2 bg-brand-brown text-brand-white rounded-lg text-xs font-bold uppercase">Unirme por $799/mes</button>
-        </div>
-      </div>
-    </div>
+    </section>
 
   </main>
 
-  <!-- ================= MODAL LOGIN (ESTILO GLASS) ================= -->
-  <div id="login-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-cover bg-center bg-no-repeat" style="background-image: linear-gradient(to bottom, rgba(18, 18, 18, 0.8), rgba(28, 25, 23, 0.9)), url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=1600');">
-    <div class="w-full max-w-md bg-stone-900/60 backdrop-blur-md border border-stone-700/60 rounded-2xl shadow-2xl p-8 relative text-brand-white">
-      
-      <button id="btn-close-login" class="absolute top-4 right-4 text-stone-400 hover:text-brand-white text-xl cursor-pointer">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-
-      <div class="text-center mb-6">
-        <div class="w-14 h-14 bg-brand-brown/20 border border-brand-brown/60 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg">
-          <i class="fa-solid fa-scissors text-xl text-brand-brown"></i>
-        </div>
-        <h2 class="text-2xl font-extrabold uppercase tracking-widest text-brand-white">INICIO DE SESION</h2>
-        <p class="text-xs text-stone-300 mt-1">Catarsis Barbería & Grooming</p>
-      </div>
-
-      <form id="login-form" class="space-y-4">
-        <div>
-          <label class="block text-xs font-semibold text-stone-200 uppercase tracking-wider mb-1">Correo</label>
-          <input type="email" id="login-email" required placeholder="Digite o e-mail" class="w-full px-4 py-2.5 bg-stone-100/90 border border-stone-300 rounded-lg text-sm text-stone-900 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-brand-brown">
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-stone-200 uppercase tracking-wider mb-1">Contraseña</label>
-          <div class="relative">
-            <input type="password" id="login-password" required placeholder="Digite a sua senha" class="w-full px-4 py-2.5 bg-stone-100/90 border border-stone-300 rounded-lg text-sm text-stone-900 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-brand-brown">
-            <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 flex items-center pr-3 text-stone-600">
-              <i class="fa-solid fa-eye" id="eye-icon"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="flex items-center justify-between pt-2">
-          <button type="submit" class="px-8 py-2.5 bg-brand-dark hover:bg-brand-black border border-stone-700 text-brand-white font-bold rounded-lg text-xs uppercase tracking-wider transition-all cursor-pointer">
-            Entrar
-          </button>
-          <a href="#" class="text-xs text-stone-300 hover:text-brand-brown">Olvido la contraseña ?</a>
-        </div>
-
-        <div class="text-center pt-4 border-t border-stone-700/50">
-          <button type="button" id="btn-open-register" class="text-xs text-stone-300 hover:text-brand-brown underline cursor-pointer">
-            Crear cuenta
-          </button>
-        </div>
-      </form>
-
-    </div>
-  </div>
-
-  <!-- ================= MODAL CREAR CUENTA / REGISTRO ================= -->
-  <div id="register-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-cover bg-center bg-no-repeat" style="background-image: linear-gradient(to bottom, rgba(18, 18, 18, 0.8), rgba(28, 25, 23, 0.9)), url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=1600');">
-    <div class="w-full max-w-md bg-stone-900/60 backdrop-blur-md border border-stone-700/60 rounded-2xl shadow-2xl p-8 relative text-brand-white">
-      
-      <button id="btn-close-register" class="absolute top-4 right-4 text-stone-400 hover:text-brand-white text-xl cursor-pointer">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-
-      <div class="text-center mb-6">
-        <h2 class="text-2xl font-extrabold uppercase tracking-widest text-brand-white">CRIAR CONTA</h2>
-        <p class="text-xs text-stone-300 mt-1">Regístrate en Catarsis Barbería</p>
-      </div>
-
-      <form id="register-form" class="space-y-4">
-        <div>
-          <label class="block text-xs font-semibold text-stone-200 uppercase tracking-wider mb-1">Nombre Completo</label>
-          <input type="text" id="reg-name" required placeholder="Tu nombre y apellido" class="w-full px-4 py-2.5 bg-stone-100/90 border border-stone-300 rounded-lg text-sm text-stone-900 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-brand-brown">
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-stone-200 uppercase tracking-wider mb-1">E-mail</label>
-          <input type="email" id="reg-email" required placeholder="correo@ejemplo.com" class="w-full px-4 py-2.5 bg-stone-100/90 border border-stone-300 rounded-lg text-sm text-stone-900 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-brand-brown">
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-stone-200 uppercase tracking-wider mb-1">Contraseña</label>
-          <input type="password" id="reg-password" required placeholder="Crea una contraseña" class="w-full px-4 py-2.5 bg-stone-100/90 border border-stone-300 rounded-lg text-sm text-stone-900 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-brand-brown">
-        </div>
-
-        <button type="submit" class="w-full py-3 bg-brand-brown hover:bg-brand-brown-light text-brand-white font-bold rounded-lg text-xs uppercase tracking-wider transition-all cursor-pointer">
-          Registrarme
-        </button>
-
-        <div class="text-center pt-3 border-t border-stone-700/50">
-          <button type="button" id="btn-back-to-login" class="text-xs text-stone-300 hover:text-brand-brown underline cursor-pointer">
-            ¿Ya tienes cuenta? Inicia sesión
-          </button>
-        </div>
-      </form>
-
-    </div>
-  </div>
-
-  <!-- Pie de página -->
-  <footer class="p-4 text-center text-xs text-stone-500 border-t border-stone-800 bg-brand-dark/30">
+  <!-- PIE DE PÁGINA -->
+  <footer class="p-4 text-center text-xs text-stone-500 border-t border-stone-800 bg-stone-950">
     <p>&copy; 2026 Catarsis Barbería. Todos los derechos reservados.</p>
   </footer>
 
-  <script src="js/script.js"></script>
+  <!-- SCRIPT DE INTERACCIÓN -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Control del Desplegable de Login
+      const loginBtn = document.getElementById('login-btn');
+      const loginDropdown = document.getElementById('login-dropdown');
+      const closeLoginDropdown = document.getElementById('close-login-dropdown');
+
+      loginBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        loginDropdown.classList.toggle('hidden');
+      });
+
+      closeLoginDropdown?.addEventListener('click', () => {
+        loginDropdown.classList.add('hidden');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!loginDropdown.contains(e.target) && !loginBtn.contains(e.target)) {
+          loginDropdown.classList.add('hidden');
+        }
+      });
+
+      // Mostrar/Ocultar contraseña
+      const togglePassword = document.getElementById('toggle-password');
+      const passwordInput = document.getElementById('password');
+      const eyeIcon = document.getElementById('eye-icon');
+
+      togglePassword?.addEventListener('click', () => {
+        const isPassword = passwordInput.getAttribute('type') === 'password';
+        passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+        eyeIcon.className = isPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
+      });
+
+      // Confirmación de reserva
+      document.getElementById('booking-form')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('¡Cita agendada con éxito en Catarsis Barbería!');
+      });
+    });
+  </script>
 </body>
 </html>
