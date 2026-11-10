@@ -33,29 +33,29 @@
 
   <!-- ENCABEZADO / NAVBAR -->
   <header class="sticky top-0 z-40 bg-stone-900/95 backdrop-blur-md border-b border-stone-800 px-6 py-4 flex items-center justify-between">
-    
     <!-- Branding / Logo -->
     <div class="flex items-center space-x-3">
       <i class="fa-solid fa-scissors text-2xl text-brand-brown"></i>
       <div>
         <h1 class="text-xl font-extrabold tracking-widest text-brand-white uppercase leading-none">Catarsis</h1>
-        <p class="text-[10px] text-stone-400 tracking-wider uppercase">Barbería & Grooming</p>
+        <p class="text-[10px] text-stone-400 tracking-wider uppercase mt-1">Barbería & Grooming</p>
       </div>
     </div>
-    <p class="text-xs text-stone-400 mt-1 tracking-wider uppercase">Barbería & Grooming</p>
   </header>
 
-  <!-- SECCIÓN 1: VISTA DE INICIO / LOGIN -->
-  <main id="login-section" class="section-view flex-grow flex items-center justify-center p-4">
-    <div class="w-full max-w-md bg-stone-900 border border-stone-800 rounded-2xl shadow-2xl p-8 my-8">
-      
-      <div class="text-center mb-8">
-        <div class="w-20 h-20 bg-brand-brown/10 border border-brand-brown rounded-full flex items-center justify-center mx-auto mb-4">
-          <i class="fa-solid fa-user text-3xl text-brand-brown"></i>
+  <main class="flex-grow space-y-16 pb-16">
+
+    <!-- SECCIÓN 1: VISTA DE INICIO / LOGIN -->
+    <section id="login-section" class="flex items-center justify-center p-4 pt-8">
+      <div class="w-full max-w-md bg-stone-900 border border-stone-800 rounded-2xl shadow-2xl p-8">
+        
+        <div class="text-center mb-8">
+          <div class="w-20 h-20 bg-brand-brown/10 border border-brand-brown rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fa-solid fa-user text-3xl text-brand-brown"></i>
+          </div>
+          <h2 class="text-2xl font-bold text-brand-white">Bienvenido</h2>
+          <p class="text-sm text-stone-400 mt-1">Inicia sesión para gestionar tus citas</p>
         </div>
-        <h2 class="text-2xl font-bold text-brand-white">Bienvenido</h2>
-        <p class="text-sm text-stone-400 mt-1">Inicia sesión para gestionar tus citas</p>
-      </div>
 
         <form id="login-form" class="space-y-4">
           <div>
@@ -104,33 +104,26 @@
             <a href="#" class="text-brand-brown hover:underline">¿Olvidaste clave?</a>
           </div>
 
-        <button 
-          type="submit" 
-          class="w-full py-3.5 bg-brand-brown hover:bg-brand-brown-light text-brand-white font-bold rounded-lg shadow-lg hover:shadow-brand-brown/20 transition-all duration-200 uppercase tracking-wider text-sm mt-2"
-        >
-          Iniciar Sesión
-        </button>
-      </form>
+          <button 
+            type="submit" 
+            class="w-full py-3.5 bg-brand-brown hover:bg-brand-brown-light text-brand-white font-bold rounded-lg shadow-lg hover:shadow-brand-brown/20 transition-all duration-200 uppercase tracking-wider text-sm mt-2"
+          >
+            Iniciar Sesión
+          </button>
+        </form>
 
-      <div class="relative my-6">
-        <div class="absolute inset-0 flex items-center">
-          <div class="w-full border-t border-stone-800"></div>
-        </div>
-        <div class="relative flex justify-center text-xs uppercase">
-          <span class="bg-stone-900 px-3 text-stone-500">O entra como invitado</span>
-        </div>
       </div>
     </section>
 
-    <!-- SECCIÓN DE SERVICIOS (AMPLIADA Y MÁS GRANDE) -->
-    <section id="servicios" class="max-w-7xl mx-auto px-6 py-8">
+    <!-- SECCIÓN DE SERVICIOS -->
+    <section id="servicios" class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-14">
         <span class="text-brand-brown text-xs font-bold tracking-widest uppercase">Catálogo Grooming</span>
         <h3 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-widest text-brand-white mt-1">Nuestros Servicios</h3>
         <p class="text-sm text-stone-400 mt-2 max-w-lg mx-auto">Técnicas de precisión profesional con productos de máxima gama para tu cuidado personal.</p>
       </div>
 
-      <!-- Tarjetas de Servicios con Mayor Tamaño y Padding -->
+      <!-- Tarjetas de Servicios -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         
         <!-- Tarjeta 1 -->
@@ -144,21 +137,11 @@
               Lavado de cabello con masaje capilar, diagnóstico de estilo, corte personalizado a tijera o máquina y peinado final con fijación profesional.
             </p>
           </div>
-          <h4 class="text-sm font-bold text-brand-white">Champú Anticaída 250ml</h4>
-          <span class="text-xs text-brand-brown font-mono my-2 block">$280 MXN</span>
-          <button class="w-full py-2 bg-stone-800 hover:bg-brand-brown text-stone-200 hover:text-brand-white rounded-lg text-xs font-bold uppercase transition-colors">Comprar</button>
-        </div>
-
-        <div class="bg-stone-900 border border-stone-800 rounded-xl p-4 flex flex-col justify-between text-center">
-          <div class="w-full h-32 bg-stone-950 rounded-lg flex items-center justify-center mb-3">
-            <i class="fa-solid fa-comb text-4xl text-brand-brown"></i>
+          <div class="pt-4 border-t border-stone-800/80 flex items-center justify-between">
+            <span class="text-stone-400 text-xs uppercase tracking-wider font-semibold">Precio</span>
+            <span class="text-brand-accent text-xl font-extrabold">$250 MXN</span>
           </div>
-          <h4 class="text-sm font-bold text-brand-white">Peine Madera de Ámbar</h4>
-          <span class="text-xs text-brand-brown font-mono my-2 block">$120 MXN</span>
-          <button class="w-full py-2 bg-stone-800 hover:bg-brand-brown text-stone-200 hover:text-brand-white rounded-lg text-xs font-bold uppercase transition-colors">Comprar</button>
         </div>
-      </div>
-    </div>
 
         <!-- Tarjeta 2 -->
         <div class="bg-stone-900 border border-stone-800 p-8 sm:p-10 rounded-3xl hover:border-brand-brown transition-all duration-300 shadow-xl flex flex-col justify-between group">
@@ -197,7 +180,7 @@
       </div>
     </section>
 
-    <!-- APARTADO SUTIL PARA AGENDAR CITAS EN LA PÁGINA PRINCIPAL -->
+    <!-- APARTADO PARA AGENDAR CITAS -->
     <section id="agendar" class="max-w-4xl mx-auto px-6">
       <div class="bg-stone-900 border border-stone-800 rounded-2xl shadow-2xl p-6 sm:p-10 relative overflow-hidden">
         <div class="absolute -top-10 -right-10 w-40 h-40 bg-brand-brown/5 rounded-full blur-2xl pointer-events-none"></div>
@@ -208,7 +191,7 @@
           </div>
           <div>
             <h3 class="text-xl font-bold text-brand-white">Reserva tu Cita</h3>
-            <p class="text-xs text-stone-400">Selecciona tu horario preferido sin necesidad de registrarte</p>
+            <p class="text-xs text-stone-400">Selecciona tu horario preferido</p>
           </div>
         </div>
 
@@ -308,26 +291,6 @@
   <!-- SCRIPT DE INTERACCIÓN -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Control del Desplegable de Login
-      const loginBtn = document.getElementById('login-btn');
-      const loginDropdown = document.getElementById('login-dropdown');
-      const closeLoginDropdown = document.getElementById('close-login-dropdown');
-
-      loginBtn?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        loginDropdown.classList.toggle('hidden');
-      });
-
-      closeLoginDropdown?.addEventListener('click', () => {
-        loginDropdown.classList.add('hidden');
-      });
-
-      document.addEventListener('click', (e) => {
-        if (!loginDropdown.contains(e.target) && !loginBtn.contains(e.target)) {
-          loginDropdown.classList.add('hidden');
-        }
-      });
-
       // Mostrar/Ocultar contraseña
       const togglePassword = document.getElementById('toggle-password');
       const passwordInput = document.getElementById('password');
