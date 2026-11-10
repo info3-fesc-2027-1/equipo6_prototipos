@@ -1,313 +1,367 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catarsis Barbería - Inicio & Citas</title>
-  
-  <!-- Font Awesome para Iconos -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Tailwind CSS por CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              black: '#121212',
-              dark: '#1C1917',
-              brown: '#8B5A2B',
-              'brown-light': '#A06D3B',
-              accent: '#C5A059',
-              white: '#F9FAFB'
-            }
-          }
-        }
-      }
-    }
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catarsis Barbería</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#121212;--card:#1c1917;--line:#2e2a27;--txt:#f5f1ea;--mut:#a39d94;--ac:#c5a059;--ac2:#8b5a2b;--mx:50%;--my:50%}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:Inter,sans-serif;transition:background .7s,--ac .7s;overflow-x:hidden}
+h1,h2,h3,h4,.brand{font-family:Oswald,sans-serif;letter-spacing:.04em}
+/* Resplandor que sigue al cursor */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(500px circle at var(--mx) var(--my),color-mix(in srgb,var(--ac) 22%,transparent),transparent 70%);transition:background .3s}
+section,header,footer{position:relative;z-index:1}
+/* Navbar */
+header{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:14px 28px;background:rgba(18,18,18,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.brand{font-size:1.4rem;text-transform:uppercase;display:flex;gap:10px;align-items:center}
+.brand i{color:var(--ac);transition:transform .6s}
+.brand:hover i{transform:rotate(360deg)}
+nav{display:flex;gap:28px}
+nav a,.mag{color:var(--mut);text-decoration:none;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;padding:8px 2px;transition:.3s,opacity .3s,filter .3s;display:inline-block}
+nav:hover a:not(:hover){opacity:.3;filter:blur(3px)}
+nav a:hover{color:var(--ac)}
+.btn{background:var(--ac2);color:#fff;border:0;padding:12px 22px;border-radius:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem;cursor:pointer;text-decoration:none;display:inline-block;position:relative;overflow:hidden;transition:background .3s,box-shadow .3s}
+.btn:hover{background:var(--ac);color:#111;box-shadow:0 8px 30px color-mix(in srgb,var(--ac) 40%,transparent)}
+.btn.ghost{background:transparent;border:1px solid var(--ac);color:var(--ac)}
+.btn.ghost:hover{background:var(--ac);color:#111}
+.btn .rip{position:absolute;border-radius:50%;background:rgba(255,255,255,.5);transform:scale(0);animation:rip .6s linear;pointer-events:none}
+@keyframes rip{to{transform:scale(4);opacity:0}}
+#pop{position:fixed;width:190px;height:125px;border-radius:14px;overflow:hidden;border:1px solid var(--line);pointer-events:none;opacity:0;transform:translate(-50%,-120%) scale(.85);transition:opacity .25s,transform .25s;z-index:60}
+#pop.on{opacity:1;transform:translate(-50%,-120%) scale(1)}
+#pop img{width:100%;height:100%;object-fit:cover}
+/* Hero + registro */
+.hero{min-height:90vh;display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;max-width:1150px;margin:auto;padding:50px 24px}
+.hero h1{font-size:clamp(3rem,8vw,6.5rem);line-height:.95;text-transform:uppercase}
+.hero h1 span{display:inline-block;transition:transform .3s,color .3s}
+.hero h1 span:hover{transform:translateY(-10px) rotate(-4deg);color:var(--ac)}
+.hero p.lead{color:var(--mut);margin:20px 0 28px;max-width:420px;line-height:1.6}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px;transition:border-color .4s,transform .4s;transform-style:preserve-3d}
+.panel:hover{border-color:var(--ac)}
+.panel h2{font-size:1.6rem;margin-bottom:4px}
+.panel .sub{color:var(--mut);font-size:.85rem;margin-bottom:18px}
+.welcome{text-align:center;font-size:1.5rem;margin-top:6px}
+.avatar{width:80px;height:80px;margin:0 auto 22px;border-radius:50%;display:grid;place-items:center;font-size:1.9rem;color:var(--ac2);background:color-mix(in srgb,var(--ac2) 12%,transparent);border:1px solid var(--ac2);transition:transform .5s,color .3s,background .3s,box-shadow .3s}
+.panel:hover .avatar{transform:scale(1.08) rotate(-6deg);color:#111;background:var(--ac);box-shadow:0 0 30px color-mix(in srgb,var(--ac) 45%,transparent)}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin-bottom:5px;transition:color .3s}
+.field:focus-within label{color:var(--ac)}
+.field input,.field select{width:100%;padding:11px 12px;background:#0d0c0b;border:1px solid var(--line);border-radius:10px;color:var(--txt);font:inherit;font-size:.9rem;outline:0;transition:border-color .3s,box-shadow .3s}
+.field input:focus,.field select:focus{border-color:var(--ac);box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 20%,transparent)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.strength{height:4px;background:var(--line);border-radius:4px;margin-top:6px;overflow:hidden}
+.strength i{display:block;height:100%;width:0;transition:width .4s,background .4s}
+.swap{text-align:center;font-size:.8rem;color:var(--mut);margin-top:14px}
+.swap a{color:var(--ac);cursor:pointer}
+/* Servicios */
+.wrap{max-width:1150px;margin:auto;padding:70px 24px}
+.title{text-align:center;margin-bottom:40px}
+.title h2{font-size:clamp(2rem,5vw,3.2rem);text-transform:uppercase}
+.title p{color:var(--mut);margin-top:8px}
+.tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:30px}
+.tab{background:transparent;border:1px solid var(--line);color:var(--mut);padding:8px 18px;border-radius:99px;cursor:pointer;font:inherit;font-size:.8rem;transition:.3s}
+.tab:hover,.tab.on{border-color:var(--ac);color:#111;background:var(--ac)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;cursor:pointer;position:relative;overflow:hidden;transition:transform .25s,border-color .4s,box-shadow .4s;transform-style:preserve-3d}
+.card::after{content:"";position:absolute;inset:0;background:radial-gradient(260px circle at var(--cx,50%) var(--cy,50%),color-mix(in srgb,var(--c) 25%,transparent),transparent 70%);opacity:0;transition:opacity .3s;pointer-events:none}
+.card:hover{border-color:var(--c);box-shadow:0 20px 50px color-mix(in srgb,var(--c) 18%,transparent)}
+.card:hover::after{opacity:1}
+.card.hide{display:none}
+.ico{width:56px;height:56px;border-radius:14px;display:grid;place-items:center;font-size:1.5rem;color:var(--c);border:1px solid color-mix(in srgb,var(--c) 45%,transparent);background:color-mix(in srgb,var(--c) 10%,transparent);margin-bottom:16px;transition:.4s}
+.card:hover .ico{background:var(--c);color:#111;transform:rotate(-8deg) scale(1.1)}
+.card h3{font-size:1.4rem;margin-bottom:8px}
+.card p{color:var(--mut);font-size:.88rem;line-height:1.55}
+.meta{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+.price{font-family:Oswald;font-size:1.4rem;color:var(--c)}
+.dur{font-size:.78rem;color:var(--mut)}
+.more{max-height:0;overflow:hidden;transition:max-height .5s ease,margin .5s}
+.card.open .more{max-height:220px;margin-top:14px}
+.more ul{list-style:none;padding:0;font-size:.84rem;color:var(--txt)}
+.more li{padding:5px 0;display:flex;gap:8px;align-items:center}
+.more li i{color:var(--c);font-size:.7rem}
+.more .btn{margin-top:12px;width:100%;text-align:center;background:var(--c);color:#111}
+.hint{font-size:.72rem;color:var(--mut);margin-top:10px;transition:opacity .3s}
+.card.open .hint{opacity:0}
+/* Reserva */
+.book{display:grid;grid-template-columns:1.3fr 1fr;gap:26px}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.slot{padding:10px;border-radius:10px;border:1px solid var(--line);background:#0d0c0b;color:var(--txt);cursor:pointer;font:inherit;font-size:.85rem;transition:.25s}
+.slot:hover{border-color:var(--ac);transform:translateY(-2px)}
+.slot.on{background:var(--ac);color:#111;border-color:var(--ac)}
+.slot.busy{opacity:.3;text-decoration:line-through;pointer-events:none}
+.sum{position:sticky;top:90px;align-self:start}
+.sum li{list-style:none;display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed var(--line);font-size:.88rem;color:var(--mut)}
+.sum li b{color:var(--txt);font-weight:600;text-align:right}
+.total{display:flex;justify-content:space-between;font-family:Oswald;font-size:1.6rem;margin-top:16px;color:var(--ac)}
+.total span{transition:transform .3s}
+.bump{transform:scale(1.25)}
+/* Contacto */
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;color:var(--mut);font-size:.88rem;line-height:1.7}
+.info h4{color:var(--txt);margin-bottom:6px;font-size:1rem}
+footer{text-align:center;padding:20px;font-size:.75rem;color:var(--mut);border-top:1px solid var(--line)}
+/* Toast */
+#toast{position:fixed;bottom:26px;left:50%;transform:translate(-50%,120px);background:var(--ac);color:#111;padding:14px 24px;border-radius:12px;font-weight:600;z-index:100;transition:transform .5s cubic-bezier(.2,1.4,.4,1);max-width:90vw;text-align:center}
+#toast.on{transform:translate(-50%,0)}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s,transform .8s}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:820px){nav{display:none}.hero,.book,.info{grid-template-columns:1fr}.hero{min-height:auto}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
 </head>
-<body class="bg-brand-black text-brand-white font-sans min-h-screen flex flex-col justify-between selection:bg-brand-brown selection:text-white">
+<body>
 
-  <!-- ENCABEZADO / NAVBAR -->
-  <header class="sticky top-0 z-40 bg-stone-900/95 backdrop-blur-md border-b border-stone-800 px-6 py-4 flex items-center justify-between">
-    <!-- Branding / Logo -->
-    <div class="flex items-center space-x-3">
-      <i class="fa-solid fa-scissors text-2xl text-brand-brown"></i>
-      <div>
-        <h1 class="text-xl font-extrabold tracking-widest text-brand-white uppercase leading-none">Catarsis</h1>
-        <p class="text-[10px] text-stone-400 tracking-wider uppercase mt-1">Barbería & Grooming</p>
+<header>
+  <div class="brand"><i class="fa-solid fa-scissors"></i> Catarsis</div>
+  <nav>
+    <a href="#inicio" data-img="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=400&q=80">Inicio</a>
+    <a href="#servicios" data-img="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=400&q=80">Servicios</a>
+    <a href="#agendar" data-img="https://images.unsplash.com/photo-1512864082165-22709e99a4c8?auto=format&fit=crop&w=400&q=80">Agendar cita</a>
+    <a href="#contacto" data-img="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=400&q=80">Contacto</a>
+  </nav>
+  <a href="#agendar" class="btn mag-b">Reservar ahora</a>
+</header>
+<div id="pop"><img id="popimg" alt=""></div>
+
+<!-- 1. INICIO: REGISTRO + ENTRAR AL CATÁLOGO -->
+<section id="inicio" class="hero">
+  <div>
+    <h1 id="hero-title">Catarsis<br>Barbería</h1>
+    <p class="lead">Corte, barba y cuidado personal con técnica de precisión. Crea tu cuenta para guardar tus citas o mira primero lo que hacemos.</p>
+    <a href="#servicios" class="btn ghost">Ver el catálogo de servicios <i class="fa-solid fa-arrow-down"></i></a>
+  </div>
+
+  <div class="panel" id="auth">
+    <h2 id="auth-title" style="text-align:center">Crear cuenta</h2>
+    <h3 class="welcome">Bienvenido</h3>
+    <p class="sub" id="auth-sub" style="text-align:center">Regístrate para agendar y ver tu historial</p>
+    <div class="avatar"><i class="fa-solid fa-user"></i></div>
+    <form id="auth-form">
+      <div class="field" id="f-name"><label>Nombre completo</label><input id="r-name" placeholder="Tu nombre" required></div>
+      <div class="field"><label>Correo electrónico</label><input type="email" id="r-mail" placeholder="cliente@catarsis.com" required></div>
+      <div class="field"><label>Contraseña</label><input type="password" id="r-pass" placeholder="Mínimo 6 caracteres" minlength="6" required>
+        <div class="strength"><i id="bar"></i></div></div>
+      <button class="btn" style="width:100%" id="auth-btn">Registrarme</button>
+    </form>
+    <p class="swap" id="swap">¿Ya tienes cuenta? <a id="swap-a">Inicia sesión</a></p>
+  </div>
+</section>
+
+<!-- 2. SERVICIOS -->
+<section id="servicios" class="wrap">
+  <div class="title reveal">
+    <h2>Nuestros servicios</h2>
+    <p>Toca una tarjeta para ver qué incluye. Verás cómo cambia el color de toda la página.</p>
+  </div>
+  <div class="tabs" id="tabs">
+    <button class="tab on" data-f="all">Todos</button>
+    <button class="tab" data-f="cabello">Cabello</button>
+    <button class="tab" data-f="barba">Barba</button>
+    <button class="tab" data-f="rostro">Rostro y cera</button>
+    <button class="tab" data-f="combo">Paquetes</button>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<!-- 3. AGENDAR -->
+<section id="agendar" class="wrap">
+  <div class="title reveal"><h2>Reserva tu cita</h2><p>Elige servicio, barbero y horario. El resumen se actualiza solo.</p></div>
+  <div class="book reveal">
+    <form class="panel" id="booking">
+      <div class="row">
+        <div class="field"><label>Nombre completo</label><input id="b-name" required placeholder="Tu nombre"></div>
+        <div class="field"><label>Teléfono / WhatsApp</label><input id="b-tel" type="tel" required placeholder="55 1234 5678"></div>
       </div>
+      <div class="row">
+        <div class="field"><label>Servicio</label><select id="b-serv" required></select></div>
+        <div class="field"><label>Barbero</label>
+          <select id="b-bar"><option>Cualquier barbero disponible</option><option>Carlos "Master Cut"</option><option>Mateo Grooming</option></select></div>
+      </div>
+      <div class="field"><label>Fecha</label><input type="date" id="b-date" required></div>
+      <div class="field"><label>Hora</label><div class="slots" id="slots"></div></div>
+      <button class="btn" style="width:100%;margin-top:6px">Confirmar reserva</button>
+    </form>
+    <div class="panel sum">
+      <h2>Tu resumen</h2><p class="sub">Así va tu cita</p>
+      <ul>
+        <li>Servicio <b id="s-serv">—</b></li>
+        <li>Barbero <b id="s-bar">Cualquiera</b></li>
+        <li>Fecha <b id="s-date">—</b></li>
+        <li>Hora <b id="s-hour">—</b></li>
+        <li>Duración <b id="s-dur">—</b></li>
+      </ul>
+      <div class="total"><span>Total</span><span id="s-tot">$0</span></div>
     </div>
-  </header>
+  </div>
+</section>
 
-  <main class="flex-grow space-y-16 pb-16">
+<!-- 4. CONTACTO -->
+<section id="contacto" class="wrap reveal">
+  <div class="info">
+    <div><h4>Ubicación</h4>Av. Principal #123, Col. Centro<br>Ciudad de México</div>
+    <div><h4>Horarios</h4>Lunes a sábado: 10:00 AM – 8:00 PM<br>Domingo: cerrado</div>
+    <div><h4>Contacto</h4>Teléfono: 55 1234 5678<br>contacto@catarsis.com</div>
+  </div>
+</section>
+<footer>&copy; 2026 Catarsis Barbería. Todos los derechos reservados.</footer>
+<div id="toast"></div>
 
-    <!-- SECCIÓN 1: VISTA DE INICIO / LOGIN -->
-    <section id="login-section" class="flex items-center justify-center p-4 pt-8">
-      <div class="w-full max-w-md bg-stone-900 border border-stone-800 rounded-2xl shadow-2xl p-8">
-        
-        <div class="text-center mb-8">
-          <div class="w-20 h-20 bg-brand-brown/10 border border-brand-brown rounded-full flex items-center justify-center mx-auto mb-4">
-            <i class="fa-solid fa-user text-3xl text-brand-brown"></i>
-          </div>
-          <h2 class="text-2xl font-bold text-brand-white">Bienvenido</h2>
-          <p class="text-sm text-stone-400 mt-1">Inicia sesión para gestionar tus citas</p>
-        </div>
+<script>
+/* ===== DATOS DE SERVICIOS (edita precios y textos aquí) ===== */
+const SERV=[
+ {id:'corte',n:'Corte clásico',cat:'cabello',ic:'scissors',c:'#c5a059',p:250,d:40,t:'Lavado, masaje capilar, corte a tijera o máquina y peinado con fijación profesional.',i:['Diagnóstico de estilo','Lavado con masaje','Corte personalizado','Peinado y fijación']},
+ {id:'fade',n:'Fade / degradado',cat:'cabello',ic:'bars-staggered',c:'#6fb1c9',p:280,d:45,t:'Degradado limpio (bajo, medio o alto) con transición suave y acabado con navaja en el contorno.',i:['Skin, low, mid o high fade','Perfilado con navaja','Delineado de línea','Productos de acabado']},
+ {id:'ninos',n:'Corte infantil',cat:'cabello',ic:'child',c:'#8ac07a',p:180,d:30,t:'Corte para niños hasta 12 años, con paciencia y buen humor.',i:['Corte a tijera o máquina','Peinado','Obsequio de paleta']},
+ {id:'tinte',n:'Tinte y cobertura de canas',cat:'cabello',ic:'fill-drip',c:'#b07ad0',p:350,d:50,t:'Cobertura natural de canas en cabello o barba, con tonos que se ven reales.',i:['Prueba de tono','Aplicación y reposo','Enjuague y acondicionador','Peinado final']},
+ {id:'barba',n:'Ritual de barba',cat:'barba',ic:'spray-can',c:'#d9822b',p:200,d:30,t:'Afeitado y diseño de barba al estilo clásico con toallas calientes y navaja libre.',i:['Toalla caliente','Aceite esencial hidratante','Navaja libre','Bálsamo refrescante']},
+ {id:'afeitado',n:'Afeitado a navaja',cat:'barba',ic:'razor',c:'#e0524d',p:220,d:30,t:'Afeitado completo de rostro con espuma caliente y navaja tradicional.',i:['Pre-afeitado con aceite','Espuma caliente','Doble pasada','Loción after shave']},
+ {id:'cera',n:'Depilación con cera',cat:'rostro',ic:'fire-flame-simple',c:'#f0b429',p:120,d:15,t:'Cera caliente de grado profesional para nariz, orejas, cejas o cuello. Rápido y con cuidado de la piel.',i:['Nariz y orejas','Cejas y entrecejo','Línea de cuello','Calmante post-cera']},
+ {id:'cejas',n:'Perfilado de cejas',cat:'rostro',ic:'eye',c:'#4fd1b5',p:90,d:15,t:'Diseño de cejas masculino, natural y limpio, con hilo o pinza.',i:['Diseño según tu rostro','Hilo o pinza','Recorte','Gel calmante']},
+ {id:'facial',n:'Limpieza facial y mascarilla',cat:'rostro',ic:'face-smile',c:'#7a8cff',p:260,d:35,t:'Exfoliación, vapor, extracción suave y mascarilla negra o de arcilla para piel con grasa e impurezas.',i:['Vapor de ozono','Exfoliante','Mascarilla negra o arcilla','Hidratante']},
+ {id:'masaje',n:'Masaje relajante',cat:'rostro',ic:'hands',c:'#e88fb0',p:150,d:20,t:'Masaje de cuello, hombros y cuero cabelludo para cerrar tu visita.',i:['Cuello y hombros','Cuero cabelludo','Aceite aromático','Toalla caliente']},
+ {id:'combo',n:'Combo Catarsis',cat:'combo',ic:'crown',c:'#ffd166',p:400,d:75,t:'La experiencia completa: corte, ritual de barba, perfilado de cejas y facial exprés.',i:['Corte exclusivo','Ritual de barba','Cejas','Facial exprés']},
+ {id:'novio',n:'Paquete novio / evento',cat:'combo',ic:'ring',c:'#ff9f68',p:650,d:100,t:'Para bodas y eventos: corte, barba, facial, cera de cejas y peinado final. Se recomienda reservar con anticipación.',i:['Corte y barba','Facial completo','Cera y cejas','Fotografía de prueba']}
+];
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const money=n=>'$'+n+' MXN';
 
-        <form id="login-form" class="space-y-4">
-          <div>
-            <label for="email" class="block text-[11px] font-semibold text-stone-300 uppercase tracking-wider mb-1">
-              Correo Electrónico
-            </label>
-            <div class="relative">
-              <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-stone-500 text-xs">
-                <i class="fa-solid fa-envelope"></i>
-              </span>
-              <input 
-                type="email" 
-                id="email" 
-                required
-                placeholder="cliente@catarsis.com" 
-                class="w-full pl-9 pr-3 py-2 bg-stone-950 border border-stone-800 rounded-lg text-brand-white text-xs placeholder-stone-600 focus:outline-none focus:border-brand-brown"
-              >
-            </div>
-          </div>
+/* ===== TOAST ===== */
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),3500)}
 
-          <div>
-            <label for="password" class="block text-[11px] font-semibold text-stone-300 uppercase tracking-wider mb-1">
-              Contraseña
-            </label>
-            <div class="relative">
-              <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-stone-500 text-xs">
-                <i class="fa-solid fa-lock"></i>
-              </span>
-              <input 
-                type="password" 
-                id="password" 
-                required
-                placeholder="••••••••" 
-                class="w-full pl-9 pr-8 py-2 bg-stone-950 border border-stone-800 rounded-lg text-brand-white text-xs placeholder-stone-600 focus:outline-none focus:border-brand-brown"
-              >
-              <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 pr-3 flex items-center text-stone-500 text-xs">
-                <i class="fa-solid fa-eye" id="eye-icon"></i>
-              </button>
-            </div>
-          </div>
+/* ===== RESPLANDOR DEL CURSOR + IMAGEN FLOTANTE ===== */
+document.addEventListener('mousemove',e=>{
+  document.body.style.setProperty('--mx',e.clientX+'px');
+  document.body.style.setProperty('--my',e.clientY+'px');
+  const p=$('#pop');p.style.left=e.clientX+'px';p.style.top=e.clientY+'px';
+});
+$$('nav a').forEach(a=>{
+  a.addEventListener('mouseenter',()=>{$('#popimg').src=a.dataset.img;$('#pop').classList.add('on')});
+  a.addEventListener('mouseleave',()=>$('#pop').classList.remove('on'));
+});
 
-          <div class="flex items-center justify-between text-[11px]">
-            <label class="flex items-center text-stone-400 cursor-pointer">
-              <input type="checkbox" class="accent-brand-brown rounded mr-1"> Recordarme
-            </label>
-            <a href="#" class="text-brand-brown hover:underline">¿Olvidaste clave?</a>
-          </div>
+/* ===== TÍTULO: letras que saltan ===== */
+$('#hero-title').innerHTML=$('#hero-title').innerHTML.split('<br>').map(l=>[...l].map(c=>`<span>${c}</span>`).join('')).join('<br>');
 
-          <button 
-            type="submit" 
-            class="w-full py-3.5 bg-brand-brown hover:bg-brand-brown-light text-brand-white font-bold rounded-lg shadow-lg hover:shadow-brand-brown/20 transition-all duration-200 uppercase tracking-wider text-sm mt-2"
-          >
-            Iniciar Sesión
-          </button>
-        </form>
+/* ===== SERVICIOS ===== */
+const grid=$('#grid');
+grid.innerHTML=SERV.map(s=>`
+<div class="card" data-cat="${s.cat}" data-id="${s.id}" style="--c:${s.c}">
+  <div class="ico"><i class="fa-solid fa-${s.ic}"></i></div>
+  <h3>${s.n}</h3><p>${s.t}</p>
+  <div class="meta"><span class="price">${money(s.p)}</span><span class="dur"><i class="fa-regular fa-clock"></i> ${s.d} min</span></div>
+  <p class="hint">Toca para ver qué incluye</p>
+  <div class="more"><ul>${s.i.map(x=>`<li><i class="fa-solid fa-check"></i>${x}</li>`).join('')}</ul>
+  <a href="#agendar" class="btn pick">Agendar este servicio</a></div>
+</div>`).join('');
 
-      </div>
-    </section>
+$$('.card').forEach(card=>{
+  const c=card.style.getPropertyValue('--c').trim();
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+    card.style.setProperty('--cx',x+'px');card.style.setProperty('--cy',y+'px');
+    card.style.transform=`perspective(700px) rotateX(${(y/r.height-.5)*-8}deg) rotateY(${(x/r.width-.5)*8}deg) translateY(-4px)`;
+  });
+  card.addEventListener('mouseenter',()=>document.body.style.setProperty('--ac',c));
+  card.addEventListener('mouseleave',()=>{card.style.transform='';document.body.style.setProperty('--ac','#c5a059')});
+  card.addEventListener('click',e=>{
+    if(e.target.closest('.pick')){selectService(card.dataset.id);return}
+    card.classList.toggle('open');
+  });
+});
+$$('.tab').forEach(t=>t.addEventListener('click',()=>{
+  $$('.tab').forEach(x=>x.classList.remove('on'));t.classList.add('on');
+  $$('.card').forEach(c=>c.classList.toggle('hide',t.dataset.f!=='all'&&c.dataset.cat!==t.dataset.f));
+}));
 
-    <!-- SECCIÓN DE SERVICIOS -->
-    <section id="servicios" class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-14">
-        <span class="text-brand-brown text-xs font-bold tracking-widest uppercase">Catálogo Grooming</span>
-        <h3 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-widest text-brand-white mt-1">Nuestros Servicios</h3>
-        <p class="text-sm text-stone-400 mt-2 max-w-lg mx-auto">Técnicas de precisión profesional con productos de máxima gama para tu cuidado personal.</p>
-      </div>
+/* ===== RESERVA ===== */
+const sel=$('#b-serv');
+sel.innerHTML='<option value="" disabled selected>Selecciona un servicio</option>'+SERV.map(s=>`<option value="${s.id}">${s.n} – $${s.p}</option>`).join('');
+const HOURS=['10:00','11:30','13:00','15:00','16:30','18:00'];
+let hour='';
+$('#slots').innerHTML=HOURS.map(h=>`<button type="button" class="slot" data-h="${h}">${h}</button>`).join('');
+const today=new Date().toISOString().slice(0,10);$('#b-date').min=today;
 
-      <!-- Tarjetas de Servicios -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        <!-- Tarjeta 1 -->
-        <div class="bg-stone-900 border border-stone-800 p-8 sm:p-10 rounded-3xl hover:border-brand-brown transition-all duration-300 shadow-xl flex flex-col justify-between group">
-          <div>
-            <div class="w-16 h-16 bg-brand-brown/10 border border-brand-brown/40 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-brown group-hover:text-white transition-all">
-              <i class="fa-solid fa-scissors text-3xl text-brand-brown group-hover:text-white"></i>
-            </div>
-            <h4 class="text-2xl font-extrabold text-brand-white mb-3">Corte Tradicional</h4>
-            <p class="text-stone-400 text-sm leading-relaxed mb-6">
-              Lavado de cabello con masaje capilar, diagnóstico de estilo, corte personalizado a tijera o máquina y peinado final con fijación profesional.
-            </p>
-          </div>
-          <div class="pt-4 border-t border-stone-800/80 flex items-center justify-between">
-            <span class="text-stone-400 text-xs uppercase tracking-wider font-semibold">Precio</span>
-            <span class="text-brand-accent text-xl font-extrabold">$250 MXN</span>
-          </div>
-        </div>
+function selectService(id){sel.value=id;update();toast('Servicio seleccionado: '+SERV.find(s=>s.id===id).n)}
+function update(){
+  const s=SERV.find(x=>x.id===sel.value);
+  $('#s-serv').textContent=s?s.n:'—';
+  $('#s-dur').textContent=s?s.d+' min':'—';
+  $('#s-bar').textContent=$('#b-bar').value.replace('Cualquier barbero disponible','Cualquiera');
+  $('#s-date').textContent=$('#b-date').value?new Date($('#b-date').value+'T12:00').toLocaleDateString('es-MX',{weekday:'long',day:'numeric',month:'long'}):'—';
+  $('#s-hour').textContent=hour||'—';
+  const t=$('#s-tot');t.textContent=s?'$'+s.p:'$0';t.classList.add('bump');setTimeout(()=>t.classList.remove('bump'),250);
+  if(s)document.body.style.setProperty('--ac',s.c);
+}
+/* Simula horarios ocupados según la fecha (reemplazar con tu base de datos) */
+function refreshSlots(){
+  const d=$('#b-date').value,seed=[...d].reduce((a,c)=>a+c.charCodeAt(0),0);
+  $$('.slot').forEach((b,i)=>{b.classList.toggle('busy',d&&(seed+i)%5===0);if(b.classList.contains('busy')&&b.dataset.h===hour){hour='';b.classList.remove('on')}});
+}
+$$('.slot').forEach(b=>b.addEventListener('click',()=>{$$('.slot').forEach(x=>x.classList.remove('on'));b.classList.add('on');hour=b.dataset.h;update()}));
+['#b-serv','#b-bar','#b-date'].forEach(i=>$(i).addEventListener('change',()=>{refreshSlots();update()}));
+$('#booking').addEventListener('submit',e=>{
+  e.preventDefault();
+  if(!hour){toast('Elige un horario para continuar');return}
+  toast('¡Cita agendada! Te esperamos el '+$('#s-date').textContent+' a las '+hour);
+  confetti();
+});
 
-        <!-- Tarjeta 2 -->
-        <div class="bg-stone-900 border border-stone-800 p-8 sm:p-10 rounded-3xl hover:border-brand-brown transition-all duration-300 shadow-xl flex flex-col justify-between group">
-          <div>
-            <div class="w-16 h-16 bg-brand-brown/10 border border-brand-brown/40 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-brown group-hover:text-white transition-all">
-              <i class="fa-solid fa-spray-can text-3xl text-brand-brown group-hover:text-white"></i>
-            </div>
-            <h4 class="text-2xl font-extrabold text-brand-white mb-3">Ritual de Barba</h4>
-            <p class="text-stone-400 text-sm leading-relaxed mb-6">
-              Afeitado y diseño de barba al estilo clásico con toallas calientes, aceites esenciales de hidratación, navaja libre y bálsamo refrescante.
-            </p>
-          </div>
-          <div class="pt-4 border-t border-stone-800/80 flex items-center justify-between">
-            <span class="text-stone-400 text-xs uppercase tracking-wider font-semibold">Precio</span>
-            <span class="text-brand-accent text-xl font-extrabold">$200 MXN</span>
-          </div>
-        </div>
+/* ===== REGISTRO / LOGIN ===== */
+let login=false;
+$('#swap').addEventListener('click',e=>{
+  if(!e.target.id)return;
+  login=!login;
+  $('#auth-title').textContent=login?'Iniciar sesión':'Crear cuenta';
+  $('#auth-sub').textContent=login?'Inicia sesión para gestionar tus citas':'Regístrate para agendar y ver tu historial';
+  $('#f-name').style.display=login?'none':'block';$('#r-name').required=!login;
+  $('#auth-btn').textContent=login?'Entrar':'Registrarme';
+  $('#swap').innerHTML=login?'¿Aún no tienes cuenta? <a id="swap-a">Regístrate</a>':'¿Ya tienes cuenta? <a id="swap-a">Inicia sesión</a>';
+});
+$('#r-pass').addEventListener('input',e=>{
+  const v=e.target.value;let sc=0;if(v.length>=6)sc++;if(/[A-Z]/.test(v))sc++;if(/\d/.test(v))sc++;if(/\W/.test(v))sc++;
+  const b=$('#bar');b.style.width=(sc*25)+'%';b.style.background=['#e0524d','#e0524d','#f0b429','#8ac07a','#4fd1b5'][sc];
+});
+$('#auth-form').addEventListener('submit',e=>{
+  e.preventDefault();
+  const n=$('#r-name').value.split(' ')[0];
+  toast(login?'¡Bienvenido de nuevo!':'¡Cuenta creada, '+n+'! Ahora explora los servicios');
+  if(!login){$('#b-name').value=$('#r-name').value;setTimeout(()=>$('#servicios').scrollIntoView(),1200)}
+});
 
-        <!-- Tarjeta 3 -->
-        <div class="bg-stone-900 border border-stone-800 p-8 sm:p-10 rounded-3xl hover:border-brand-brown transition-all duration-300 shadow-xl flex flex-col justify-between group">
-          <div>
-            <div class="w-16 h-16 bg-brand-brown/10 border border-brand-brown/40 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-brown group-hover:text-white transition-all">
-              <i class="fa-solid fa-crown text-3xl text-brand-brown group-hover:text-white"></i>
-            </div>
-            <h4 class="text-2xl font-extrabold text-brand-white mb-3">Combo Catarsis</h4>
-            <p class="text-stone-400 text-sm leading-relaxed mb-6">
-              La experiencia completa de la casa: Corte exclusivo, ritual completo de barba, perfilado de cejas y tratamiento facial exfoliante express.
-            </p>
-          </div>
-          <div class="pt-4 border-t border-stone-800/80 flex items-center justify-between">
-            <span class="text-stone-400 text-xs uppercase tracking-wider font-semibold">Precio VIP</span>
-            <span class="text-brand-accent text-xl font-extrabold">$400 MXN</span>
-          </div>
-        </div>
+/* ===== BOTONES: magnético + onda al hacer clic ===== */
+$$('.btn,.tab').forEach(b=>{
+  b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.25}px,${(e.clientY-r.top-r.height/2)*.25}px)`});
+  b.addEventListener('mouseleave',()=>b.style.transform='');
+  b.addEventListener('click',e=>{
+    const r=b.getBoundingClientRect(),s=Math.max(r.width,r.height),sp=document.createElement('span');
+    sp.className='rip';sp.style.cssText=`width:${s}px;height:${s}px;left:${e.clientX-r.left-s/2}px;top:${e.clientY-r.top-s/2}px`;
+    b.appendChild(sp);setTimeout(()=>sp.remove(),600);
+  });
+});
 
-      </div>
-    </section>
+/* ===== PANELES: inclinación 3D ===== */
+$$('.panel:not(.sum)').forEach(p=>{
+  p.addEventListener('mousemove',e=>{const r=p.getBoundingClientRect();p.style.transform=`perspective(900px) rotateX(${((e.clientY-r.top)/r.height-.5)*-4}deg) rotateY(${((e.clientX-r.left)/r.width-.5)*4}deg)`});
+  p.addEventListener('mouseleave',()=>p.style.transform='');
+});
 
-    <!-- APARTADO PARA AGENDAR CITAS -->
-    <section id="agendar" class="max-w-4xl mx-auto px-6">
-      <div class="bg-stone-900 border border-stone-800 rounded-2xl shadow-2xl p-6 sm:p-10 relative overflow-hidden">
-        <div class="absolute -top-10 -right-10 w-40 h-40 bg-brand-brown/5 rounded-full blur-2xl pointer-events-none"></div>
+/* ===== APARICIÓN AL HACER SCROLL ===== */
+const io=new IntersectionObserver(es=>es.forEach(x=>x.isIntersecting&&x.target.classList.add('in')),{threshold:.15});
+$$('.reveal').forEach(r=>io.observe(r));
 
-        <div class="flex items-center space-x-3 mb-6 pb-4 border-b border-stone-800">
-          <div class="w-10 h-10 bg-brand-brown/10 border border-brand-brown rounded-full flex items-center justify-center text-brand-brown">
-            <i class="fa-solid fa-calendar-check text-lg"></i>
-          </div>
-          <div>
-            <h3 class="text-xl font-bold text-brand-white">Reserva tu Cita</h3>
-            <p class="text-xs text-stone-400">Selecciona tu horario preferido</p>
-          </div>
-        </div>
-
-        <form id="booking-form" class="space-y-4">
-          <!-- Datos del cliente -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-semibold text-stone-300 uppercase tracking-wider mb-1">Nombre Completo</label>
-              <input type="text" required placeholder="Tu nombre" class="w-full px-3 py-2.5 bg-stone-950 border border-stone-800 rounded-lg text-brand-white text-sm focus:outline-none focus:border-brand-brown">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-stone-300 uppercase tracking-wider mb-1">Teléfono / WhatsApp</label>
-              <input type="tel" required placeholder="55 1234 5678" class="w-full px-3 py-2.5 bg-stone-950 border border-stone-800 rounded-lg text-brand-white text-sm focus:outline-none focus:border-brand-brown">
-            </div>
-          </div>
-
-          <!-- Selección de Servicio y Barbero -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-semibold text-stone-300 uppercase tracking-wider mb-1">Servicio</label>
-              <select required class="w-full px-3 py-2.5 bg-stone-950 border border-stone-800 rounded-lg text-brand-white text-sm focus:outline-none focus:border-brand-brown">
-                <option value="" disabled selected>Selecciona un servicio</option>
-                <option value="corte">Corte Tradicional - $250</option>
-                <option value="barba">Ritual de Barba - $200</option>
-                <option value="combo">Combo Catarsis - $400</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-stone-300 uppercase tracking-wider mb-1">Barbero</label>
-              <select required class="w-full px-3 py-2.5 bg-stone-950 border border-stone-800 rounded-lg text-brand-white text-sm focus:outline-none focus:border-brand-brown">
-                <option value="cualquiera">Cualquier barbero disponible</option>
-                <option value="barbero-1">Carlos "Master Cut"</option>
-                <option value="barbero-2">Mateo Grooming</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Fecha y Hora -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-semibold text-stone-300 uppercase tracking-wider mb-1">Fecha</label>
-              <input type="date" required class="w-full px-3 py-2.5 bg-stone-950 border border-stone-800 rounded-lg text-brand-white text-sm focus:outline-none focus:border-brand-brown">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-stone-300 uppercase tracking-wider mb-1">Hora</label>
-              <select required class="w-full px-3 py-2.5 bg-stone-950 border border-stone-800 rounded-lg text-brand-white text-sm focus:outline-none focus:border-brand-brown">
-                <option value="" disabled selected>Selecciona horario</option>
-                <option value="10:00">10:00 AM</option>
-                <option value="11:30">11:30 AM</option>
-                <option value="13:00">01:00 PM</option>
-                <option value="15:00">03:00 PM</option>
-                <option value="16:30">04:30 PM</option>
-                <option value="18:00">06:00 PM</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Botón de Confirmación -->
-          <button 
-            type="submit" 
-            class="w-full py-3.5 bg-brand-brown hover:bg-brand-brown-light text-white font-bold rounded-lg shadow-lg hover:shadow-brand-brown/20 transition-all uppercase tracking-wider text-sm mt-2"
-          >
-            Confirmar Reserva
-          </button>
-        </form>
-      </div>
-    </section>
-
-    <!-- UBICACIÓN / CONTACTO -->
-    <section id="contacto" class="max-w-6xl mx-auto px-6 border-t border-stone-800 pt-16">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left text-xs text-stone-400">
-        <div>
-          <h4 class="text-sm font-bold text-brand-white uppercase mb-2">Ubicación</h4>
-          <p>Av. Principal #123, Col. Centro</p>
-          <p>Ciudad de México</p>
-        </div>
-        <div>
-          <h4 class="text-sm font-bold text-brand-white uppercase mb-2">Horarios</h4>
-          <p>Lunes a Sábado: 10:00 AM - 8:00 PM</p>
-          <p>Domingo: Cerrado</p>
-        </div>
-        <div>
-          <h4 class="text-sm font-bold text-brand-white uppercase mb-2">Contacto</h4>
-          <p>Teléfono: 55 1234 5678</p>
-          <p>Email: contacto@catarsis.com</p>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- PIE DE PÁGINA -->
-  <footer class="p-4 text-center text-xs text-stone-500 border-t border-stone-800 bg-stone-950">
-    <p>&copy; 2026 Catarsis Barbería. Todos los derechos reservados.</p>
-  </footer>
-
-  <!-- SCRIPT DE INTERACCIÓN -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Mostrar/Ocultar contraseña
-      const togglePassword = document.getElementById('toggle-password');
-      const passwordInput = document.getElementById('password');
-      const eyeIcon = document.getElementById('eye-icon');
-
-      togglePassword?.addEventListener('click', () => {
-        const isPassword = passwordInput.getAttribute('type') === 'password';
-        passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
-        eyeIcon.className = isPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
-      });
-
-      // Confirmación de reserva
-      document.getElementById('booking-form')?.addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('¡Cita agendada con éxito en Catarsis Barbería!');
-      });
-    });
-  </script>
+/* ===== CONFETI AL CONFIRMAR ===== */
+function confetti(){
+  const cols=['#c5a059','#8b5a2b','#f5f1ea','#ffd166'];
+  for(let i=0;i<60;i++){
+    const d=document.createElement('i');
+    d.style.cssText=`position:fixed;left:50%;top:60%;width:8px;height:12px;background:${cols[i%4]};z-index:200;pointer-events:none;border-radius:2px`;
+    document.body.appendChild(d);
+    const a=Math.random()*Math.PI*2,v=150+Math.random()*350;
+    d.animate([{transform:'translate(0,0) rotate(0)',opacity:1},{transform:`translate(${Math.cos(a)*v}px,${Math.sin(a)*v+300}px) rotate(${Math.random()*720}deg)`,opacity:0}],{duration:1400,easing:'cubic-bezier(.2,.7,.4,1)'}).onfinish=()=>d.remove();
+  }
+}
+</script>
 </body>
 </html>
