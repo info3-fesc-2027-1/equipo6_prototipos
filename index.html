@@ -78,7 +78,7 @@ nav a:hover{color:var(--ac)}
 .price{font-family:Oswald;font-size:1.4rem;color:var(--c)}
 .dur{font-size:.78rem;color:var(--mut)}
 .more{max-height:0;overflow:hidden;transition:max-height .5s ease,margin .5s}
-.card.open .more{max-height:220px;margin-top:14px}
+.card.open .more{max-height:240px;margin-top:14px}
 .more ul{list-style:none;padding:0;font-size:.84rem;color:var(--txt)}
 .more li{padding:5px 0;display:flex;gap:8px;align-items:center}
 .more li i{color:var(--c);font-size:.7rem}
@@ -117,8 +117,8 @@ footer{text-align:center;padding:20px;font-size:.75rem;color:var(--mut);border-t
   <div class="brand"><i class="fa-solid fa-scissors"></i> Catarsis</div>
   <nav>
     <a href="#inicio" data-img="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=400&q=80">Inicio</a>
-    <a href="#servicios" data-img="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=400&q=80">Servicios</a>
-    <a href="#agendar" data-img="https://images.unsplash.com/photo-1512864082165-22709e99a4c8?auto=format&fit=crop&w=400&q=80">Agendar cita</a>
+    <a href="#servicios" data-img="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=400&q=80">Servicios y Cursos</a>
+    <a href="#agendar" data-img="https://images.unsplash.com/photo-1512864082165-22709e99a4c8?auto=format&fit=crop&w=400&q=80">Agendar</a>
     <a href="#contacto" data-img="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=400&q=80">Contacto</a>
   </nav>
   <a href="#agendar" class="btn mag-b">Reservar ahora</a>
@@ -129,8 +129,8 @@ footer{text-align:center;padding:20px;font-size:.75rem;color:var(--mut);border-t
 <section id="inicio" class="hero">
   <div>
     <h1 id="hero-title">Catarsis<br>Barbería</h1>
-    <p class="lead">Corte, barba y cuidado personal con técnica de precisión. Crea tu cuenta para guardar tus citas o mira primero lo que hacemos.</p>
-    <a href="#servicios" class="btn ghost">Ver el catálogo de servicios <i class="fa-solid fa-arrow-down"></i></a>
+    <p class="lead">Corte, barba, cuidado personal y formación profesional con técnica de precisión. Crea tu cuenta para guardar tus citas o explora nuestro catálogo.</p>
+    <a href="#servicios" class="btn ghost">Ver servicios y cursos <i class="fa-solid fa-arrow-down"></i></a>
   </div>
 
   <div class="panel" id="auth">
@@ -149,10 +149,10 @@ footer{text-align:center;padding:20px;font-size:.75rem;color:var(--mut);border-t
   </div>
 </section>
 
-<!-- 2. SERVICIOS -->
+<!-- 2. SERVICIOS Y CURSOS -->
 <section id="servicios" class="wrap">
   <div class="title reveal">
-    <h2>Nuestros servicios</h2>
+    <h2>Servicios y Academia</h2>
     <p>Toca una tarjeta para ver qué incluye. Verás cómo cambia el color de toda la página.</p>
   </div>
   <div class="tabs" id="tabs">
@@ -161,13 +161,14 @@ footer{text-align:center;padding:20px;font-size:.75rem;color:var(--mut);border-t
     <button class="tab" data-f="barba">Barba</button>
     <button class="tab" data-f="rostro">Rostro y cera</button>
     <button class="tab" data-f="combo">Paquetes</button>
+    <button class="tab" data-f="cursos">Cursos</button>
   </div>
   <div class="grid" id="grid"></div>
 </section>
 
 <!-- 3. AGENDAR -->
 <section id="agendar" class="wrap">
-  <div class="title reveal"><h2>Reserva tu cita</h2><p>Elige servicio, barbero y horario. El resumen se actualiza solo.</p></div>
+  <div class="title reveal"><h2>Reserva tu cita o curso</h2><p>Elige servicio o curso, barbero y horario. El resumen se actualiza solo.</p></div>
   <div class="book reveal">
     <form class="panel" id="booking">
       <div class="row">
@@ -175,8 +176,8 @@ footer{text-align:center;padding:20px;font-size:.75rem;color:var(--mut);border-t
         <div class="field"><label>Teléfono / WhatsApp</label><input id="b-tel" type="tel" required placeholder="55 1234 5678"></div>
       </div>
       <div class="row">
-        <div class="field"><label>Servicio</label><select id="b-serv" required></select></div>
-        <div class="field"><label>Barbero</label>
+        <div class="field"><label>Servicio o Curso</label><select id="b-serv" required></select></div>
+        <div class="field"><label>Barbero / Instructor</label>
           <select id="b-bar"><option>Cualquier barbero disponible</option><option>Carlos "Master Cut"</option><option>Mateo Grooming</option></select></div>
       </div>
       <div class="field"><label>Fecha</label><input type="date" id="b-date" required></div>
@@ -184,9 +185,9 @@ footer{text-align:center;padding:20px;font-size:.75rem;color:var(--mut);border-t
       <button class="btn" style="width:100%;margin-top:6px">Confirmar reserva</button>
     </form>
     <div class="panel sum">
-      <h2>Tu resumen</h2><p class="sub">Así va tu cita</p>
+      <h2>Tu resumen</h2><p class="sub">Así va tu registro</p>
       <ul>
-        <li>Servicio <b id="s-serv">—</b></li>
+        <li>Selección <b id="s-serv">—</b></li>
         <li>Barbero <b id="s-bar">Cualquiera</b></li>
         <li>Fecha <b id="s-date">—</b></li>
         <li>Hora <b id="s-hour">—</b></li>
@@ -209,7 +210,7 @@ footer{text-align:center;padding:20px;font-size:.75rem;color:var(--mut);border-t
 <div id="toast"></div>
 
 <script>
-/* ===== DATOS DE SERVICIOS (edita precios y textos aquí) ===== */
+/* ===== DATOS DE SERVICIOS Y CURSOS (edita precios y textos aquí) ===== */
 const SERV=[
  {id:'corte',n:'Corte clásico',cat:'cabello',ic:'scissors',c:'#c5a059',p:250,d:40,t:'Lavado, masaje capilar, corte a tijera o máquina y peinado con fijación profesional.',i:['Diagnóstico de estilo','Lavado con masaje','Corte personalizado','Peinado y fijación']},
  {id:'fade',n:'Fade / degradado',cat:'cabello',ic:'bars-staggered',c:'#6fb1c9',p:280,d:45,t:'Degradado limpio (bajo, medio o alto) con transición suave y acabado con navaja en el contorno.',i:['Skin, low, mid o high fade','Perfilado con navaja','Delineado de línea','Productos de acabado']},
@@ -222,7 +223,10 @@ const SERV=[
  {id:'facial',n:'Limpieza facial y mascarilla',cat:'rostro',ic:'face-smile',c:'#7a8cff',p:260,d:35,t:'Exfoliación, vapor, extracción suave y mascarilla negra o de arcilla para piel con grasa e impurezas.',i:['Vapor de ozono','Exfoliante','Mascarilla negra o arcilla','Hidratante']},
  {id:'masaje',n:'Masaje relajante',cat:'rostro',ic:'hands',c:'#e88fb0',p:150,d:20,t:'Masaje de cuello, hombros y cuero cabelludo para cerrar tu visita.',i:['Cuello y hombros','Cuero cabelludo','Aceite aromático','Toalla caliente']},
  {id:'combo',n:'Combo Catarsis',cat:'combo',ic:'crown',c:'#ffd166',p:400,d:75,t:'La experiencia completa: corte, ritual de barba, perfilado de cejas y facial exprés.',i:['Corte exclusivo','Ritual de barba','Cejas','Facial exprés']},
- {id:'novio',n:'Paquete novio / evento',cat:'combo',ic:'ring',c:'#ff9f68',p:650,d:100,t:'Para bodas y eventos: corte, barba, facial, cera de cejas y peinado final. Se recomienda reservar con anticipación.',i:['Corte y barba','Facial completo','Cera y cejas','Fotografía de prueba']}
+ {id:'novio',n:'Paquete novio / evento',cat:'combo',ic:'ring',c:'#ff9f68',p:650,d:100,t:'Para bodas y eventos: corte, barba, facial, cera de cejas y peinado final. Se recomienda reservar con anticipación.',i:['Corte y barba','Facial completo','Cera y cejas','Fotografía de prueba']},
+ {id:'curso-basico',n:'Curso básico de barbería',cat:'cursos',ic:'graduation-cap',c:'#38bdf8',p:3500,d:240,t:'Iníciate desde cero en el arte de la barbería: manejo de herramientas, cortes clásicos y fundamentos de desvanecido.',i:['Uso y mantenimiento de máquinas','Cortes clásicos a tijera y máquina','Introducción al fade y perfilado','Constancia de participación']},
+ {id:'curso-perfeccionamiento',n:'Curso de perfeccionamiento',cat:'cursos',ic:'award',c:'#a78bfa',p:4500,d:240,t:'Domina técnicas avanzadas de degradado, texturizado, visagismo y ritual tradicional de barba con navaja.',i:['Skin fade y transiciones limpias','Texturizado y dirección de crecimiento','Ritual de barba y toalla caliente','Práctica supervisada en modelo real']},
+ {id:'curso-grecas',n:'Curso de grecas y diseño',cat:'cursos',ic:'pen-nib',c:'#f43f5e',p:2200,d:180,t:'Aprende diseño artístico (hair tattoo), simetría, líneas curvas, sombreado con patillera y acabado con navaja.',i:['Geometría y proporción en cráneo','Manejo preciso de trimmer y navaja','Sombreados y efectos 3D','Diseño libre y corrección de trazos']}
 ];
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const money=n=>'$'+n+' MXN';
@@ -244,7 +248,7 @@ $$('nav a').forEach(a=>{
 /* ===== TÍTULO: letras que saltan ===== */
 $('#hero-title').innerHTML=$('#hero-title').innerHTML.split('<br>').map(l=>[...l].map(c=>`<span>${c}</span>`).join('')).join('<br>');
 
-/* ===== SERVICIOS ===== */
+/* ===== SERVICIOS Y CURSOS ===== */
 const grid=$('#grid');
 grid.innerHTML=SERV.map(s=>`
 <div class="card" data-cat="${s.cat}" data-id="${s.id}" style="--c:${s.c}">
@@ -253,7 +257,7 @@ grid.innerHTML=SERV.map(s=>`
   <div class="meta"><span class="price">${money(s.p)}</span><span class="dur"><i class="fa-regular fa-clock"></i> ${s.d} min</span></div>
   <p class="hint">Toca para ver qué incluye</p>
   <div class="more"><ul>${s.i.map(x=>`<li><i class="fa-solid fa-check"></i>${x}</li>`).join('')}</ul>
-  <a href="#agendar" class="btn pick">Agendar este servicio</a></div>
+  <a href="#agendar" class="btn pick">${s.cat==='cursos'?'Inscribirme a este curso':'Agendar este servicio'}</a></div>
 </div>`).join('');
 
 $$('.card').forEach(card=>{
@@ -277,13 +281,13 @@ $$('.tab').forEach(t=>t.addEventListener('click',()=>{
 
 /* ===== RESERVA ===== */
 const sel=$('#b-serv');
-sel.innerHTML='<option value="" disabled selected>Selecciona un servicio</option>'+SERV.map(s=>`<option value="${s.id}">${s.n} – $${s.p}</option>`).join('');
+sel.innerHTML='<option value="" disabled selected>Selecciona un servicio o curso</option>'+SERV.map(s=>`<option value="${s.id}">${s.n} – $${s.p}</option>`).join('');
 const HOURS=['10:00','11:30','13:00','15:00','16:30','18:00'];
 let hour='';
 $('#slots').innerHTML=HOURS.map(h=>`<button type="button" class="slot" data-h="${h}">${h}</button>`).join('');
 const today=new Date().toISOString().slice(0,10);$('#b-date').min=today;
 
-function selectService(id){sel.value=id;update();toast('Servicio seleccionado: '+SERV.find(s=>s.id===id).n)}
+function selectService(id){sel.value=id;update();toast('Seleccionado: '+SERV.find(s=>s.id===id).n)}
 function update(){
   const s=SERV.find(x=>x.id===sel.value);
   $('#s-serv').textContent=s?s.n:'—';
@@ -304,7 +308,7 @@ $$('.slot').forEach(b=>b.addEventListener('click',()=>{$$('.slot').forEach(x=>x.
 $('#booking').addEventListener('submit',e=>{
   e.preventDefault();
   if(!hour){toast('Elige un horario para continuar');return}
-  toast('¡Cita agendada! Te esperamos el '+$('#s-date').textContent+' a las '+hour);
+  toast('¡Reserva confirmada! Te esperamos el '+$('#s-date').textContent+' a las '+hour);
   confetti();
 });
 
@@ -326,7 +330,7 @@ $('#r-pass').addEventListener('input',e=>{
 $('#auth-form').addEventListener('submit',e=>{
   e.preventDefault();
   const n=$('#r-name').value.split(' ')[0];
-  toast(login?'¡Bienvenido de nuevo!':'¡Cuenta creada, '+n+'! Ahora explora los servicios');
+  toast(login?'¡Bienvenido de nuevo!':'¡Cuenta creada, '+n+'! Ahora explora los servicios y cursos');
   if(!login){$('#b-name').value=$('#r-name').value;setTimeout(()=>$('#servicios').scrollIntoView(),1200)}
 });
 
