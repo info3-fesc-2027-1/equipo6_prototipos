@@ -93,8 +93,22 @@ nav a:hover{color:var(--ac)}
 .slot.on{background:var(--ac);color:#111;border-color:var(--ac)}
 .slot.busy{opacity:.3;text-decoration:line-through;pointer-events:none}
 .sum{position:sticky;top:90px;align-self:start}
+.sum ul{list-style:none;padding:0}
 .sum li{list-style:none;display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed var(--line);font-size:.88rem;color:var(--mut)}
 .sum li b{color:var(--txt);font-weight:600;text-align:right}
+/* Lista acumulada en resumen */
+.cart-box{margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.cart-title{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ac);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.cart-clear{background:none;border:0;color:var(--mut);font-size:.72rem;cursor:pointer;text-decoration:underline;padding:0}
+.cart-clear:hover{color:var(--txt)}
+.cart-list{max-height:190px;overflow-y:auto;padding-right:4px}
+.cart-item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:7px 10px;margin-bottom:6px;background:#0d0c0b;border:1px solid var(--line);border-radius:10px;font-size:.84rem;animation:popIn .25s ease}
+@keyframes popIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.cart-item span{color:var(--txt);flex:1}
+.cart-item small{color:var(--ac);font-family:Oswald;font-size:.95rem;white-space:nowrap}
+.cart-del{background:transparent;border:0;color:var(--mut);cursor:pointer;font-size:1rem;line-height:1;padding:2px 6px;border-radius:6px;transition:.2s}
+.cart-del:hover{color:#e0524d;background:rgba(224,82,77,.15)}
+.cart-empty{font-size:.84rem;color:var(--mut);font-style:italic;padding:6px 0}
 .total{display:flex;justify-content:space-between;font-family:Oswald;font-size:1.6rem;margin-top:16px;color:var(--ac)}
 .total span{transition:transform .3s}
 .bump{transform:scale(1.25)}
@@ -117,8 +131,8 @@ footer{text-align:center;padding:20px;font-size:.75rem;color:var(--mut);border-t
   <div class="brand"><i class="fa-solid fa-scissors"></i> Catarsis</div>
   <nav>
     <a href="#inicio" data-img="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=400&q=80">Inicio</a>
-    <a href="#servicios" data-img="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=400&q=80">Servicios y Cursos</a>
-    <a href="#agendar" data-img="https://images.unsplash.com/photo-1512864082165-22709e99a4c8?auto=format&fit=crop&w=400&q=80">Agendar</a>
+    <a href="#servicios" data-img="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=400&q=80">Catálogo</a>
+    <a href="#agendar" data-img="https://images.unsplash.com/photo-1512864082165-22709e99a4c8?auto=format&fit=crop&w=400&q=80">Agendar y Pedidos</a>
     <a href="#contacto" data-img="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=400&q=80">Contacto</a>
   </nav>
   <a href="#agendar" class="btn mag-b">Reservar ahora</a>
@@ -129,8 +143,8 @@ footer{text-align:center;padding:20px;font-size:.75rem;color:var(--mut);border-t
 <section id="inicio" class="hero">
   <div>
     <h1 id="hero-title">Catarsis<br>Barbería</h1>
-    <p class="lead">Corte, barba, cuidado personal y formación profesional con técnica de precisión. Crea tu cuenta para guardar tus citas o explora nuestro catálogo.</p>
-    <a href="#servicios" class="btn ghost">Ver servicios y cursos <i class="fa-solid fa-arrow-down"></i></a>
+    <p class="lead">Corte, barba, productos de cuidado personal y formación profesional con técnica de precisión. Crea tu cuenta o explora nuestro catálogo completo.</p>
+    <a href="#servicios" class="btn ghost">Ver servicios, productos y cursos <i class="fa-solid fa-arrow-down"></i></a>
   </div>
 
   <div class="panel" id="auth">
@@ -149,11 +163,11 @@ footer{text-align:center;padding:20px;font-size:.75rem;color:var(--mut);border-t
   </div>
 </section>
 
-<!-- 2. SERVICIOS Y CURSOS -->
+<!-- 2. SERVICIOS, PRODUCTOS Y CURSOS -->
 <section id="servicios" class="wrap">
   <div class="title reveal">
-    <h2>Servicios y Academia</h2>
-    <p>Toca una tarjeta para ver qué incluye. Verás cómo cambia el color de toda la página.</p>
+    <h2>Servicios, Productos y Academia</h2>
+    <p>Toca una tarjeta para ver detalles y agrégala a tu resumen. Puedes combinar servicios, productos y cursos.</p>
   </div>
   <div class="tabs" id="tabs">
     <button class="tab on" data-f="all">Todos</button>
@@ -161,14 +175,15 @@ footer{text-align:center;padding:20px;font-size:.75rem;color:var(--mut);border-t
     <button class="tab" data-f="barba">Barba</button>
     <button class="tab" data-f="rostro">Rostro y cera</button>
     <button class="tab" data-f="combo">Paquetes</button>
+    <button class="tab" data-f="productos">Productos</button>
     <button class="tab" data-f="cursos">Cursos</button>
   </div>
   <div class="grid" id="grid"></div>
 </section>
 
-<!-- 3. AGENDAR -->
+<!-- 3. AGENDAR Y PEDIDOS -->
 <section id="agendar" class="wrap">
-  <div class="title reveal"><h2>Reserva tu cita o curso</h2><p>Elige servicio o curso, barbero y horario. El resumen se actualiza solo.</p></div>
+  <div class="title reveal"><h2>Reserva tu cita o pedido</h2><p>Agrega servicios, productos o cursos. El resumen acumula todo automáticamente.</p></div>
   <div class="book reveal">
     <form class="panel" id="booking">
       <div class="row">
@@ -176,22 +191,31 @@ footer{text-align:center;padding:20px;font-size:.75rem;color:var(--mut);border-t
         <div class="field"><label>Teléfono / WhatsApp</label><input id="b-tel" type="tel" required placeholder="55 1234 5678"></div>
       </div>
       <div class="row">
-        <div class="field"><label>Servicio o Curso</label><select id="b-serv" required></select></div>
+        <div class="field"><label>Agregar al pedido</label><select id="b-serv"></select></div>
         <div class="field"><label>Barbero / Instructor</label>
           <select id="b-bar"><option>Cualquier barbero disponible</option><option>Carlos "Master Cut"</option><option>Mateo Grooming</option></select></div>
       </div>
       <div class="field"><label>Fecha</label><input type="date" id="b-date" required></div>
       <div class="field"><label>Hora</label><div class="slots" id="slots"></div></div>
-      <button class="btn" style="width:100%;margin-top:6px">Confirmar reserva</button>
+      <button class="btn" style="width:100%;margin-top:6px">Confirmar pedido / reserva</button>
     </form>
+
     <div class="panel sum">
-      <h2>Tu resumen</h2><p class="sub">Así va tu registro</p>
+      <h2>Tu resumen</h2><p class="sub">Servicios, productos y cursos acumulados</p>
+      <div class="cart-box">
+        <div class="cart-title">
+          <span>Seleccionados (<b id="s-count">0</b>)</span>
+          <button type="button" class="cart-clear" id="cart-clear" style="display:none">Vaciar todo</button>
+        </div>
+        <div class="cart-list" id="s-list">
+          <div class="cart-empty">Aún no has agregado nada a tu resumen.</div>
+        </div>
+      </div>
       <ul>
-        <li>Selección <b id="s-serv">—</b></li>
         <li>Barbero <b id="s-bar">Cualquiera</b></li>
         <li>Fecha <b id="s-date">—</b></li>
         <li>Hora <b id="s-hour">—</b></li>
-        <li>Duración <b id="s-dur">—</b></li>
+        <li>Duración en silla <b id="s-dur">0 min</b></li>
       </ul>
       <div class="total"><span>Total</span><span id="s-tot">$0</span></div>
     </div>
@@ -210,20 +234,35 @@ footer{text-align:center;padding:20px;font-size:.75rem;color:var(--mut);border-t
 <div id="toast"></div>
 
 <script>
-/* ===== DATOS DE SERVICIOS Y CURSOS (edita precios y textos aquí) ===== */
+/* ===== DATOS DE SERVICIOS, PRODUCTOS Y CURSOS ===== */
 const SERV=[
+ /* Cabello */
  {id:'corte',n:'Corte clásico',cat:'cabello',ic:'scissors',c:'#c5a059',p:250,d:40,t:'Lavado, masaje capilar, corte a tijera o máquina y peinado con fijación profesional.',i:['Diagnóstico de estilo','Lavado con masaje','Corte personalizado','Peinado y fijación']},
  {id:'fade',n:'Fade / degradado',cat:'cabello',ic:'bars-staggered',c:'#6fb1c9',p:280,d:45,t:'Degradado limpio (bajo, medio o alto) con transición suave y acabado con navaja en el contorno.',i:['Skin, low, mid o high fade','Perfilado con navaja','Delineado de línea','Productos de acabado']},
  {id:'ninos',n:'Corte infantil',cat:'cabello',ic:'child',c:'#8ac07a',p:180,d:30,t:'Corte para niños hasta 12 años, con paciencia y buen humor.',i:['Corte a tijera o máquina','Peinado','Obsequio de paleta']},
  {id:'tinte',n:'Tinte y cobertura de canas',cat:'cabello',ic:'fill-drip',c:'#b07ad0',p:350,d:50,t:'Cobertura natural de canas en cabello o barba, con tonos que se ven reales.',i:['Prueba de tono','Aplicación y reposo','Enjuague y acondicionador','Peinado final']},
+
+ /* Barba */
  {id:'barba',n:'Ritual de barba',cat:'barba',ic:'spray-can',c:'#d9822b',p:200,d:30,t:'Afeitado y diseño de barba al estilo clásico con toallas calientes y navaja libre.',i:['Toalla caliente','Aceite esencial hidratante','Navaja libre','Bálsamo refrescante']},
  {id:'afeitado',n:'Afeitado a navaja',cat:'barba',ic:'razor',c:'#e0524d',p:220,d:30,t:'Afeitado completo de rostro con espuma caliente y navaja tradicional.',i:['Pre-afeitado con aceite','Espuma caliente','Doble pasada','Loción after shave']},
+
+ /* Rostro y cera */
  {id:'cera',n:'Depilación con cera',cat:'rostro',ic:'fire-flame-simple',c:'#f0b429',p:120,d:15,t:'Cera caliente de grado profesional para nariz, orejas, cejas o cuello. Rápido y con cuidado de la piel.',i:['Nariz y orejas','Cejas y entrecejo','Línea de cuello','Calmante post-cera']},
  {id:'cejas',n:'Perfilado de cejas',cat:'rostro',ic:'eye',c:'#4fd1b5',p:90,d:15,t:'Diseño de cejas masculino, natural y limpio, con hilo o pinza.',i:['Diseño según tu rostro','Hilo o pinza','Recorte','Gel calmante']},
  {id:'facial',n:'Limpieza facial y mascarilla',cat:'rostro',ic:'face-smile',c:'#7a8cff',p:260,d:35,t:'Exfoliación, vapor, extracción suave y mascarilla negra o de arcilla para piel con grasa e impurezas.',i:['Vapor de ozono','Exfoliante','Mascarilla negra o arcilla','Hidratante']},
  {id:'masaje',n:'Masaje relajante',cat:'rostro',ic:'hands',c:'#e88fb0',p:150,d:20,t:'Masaje de cuello, hombros y cuero cabelludo para cerrar tu visita.',i:['Cuello y hombros','Cuero cabelludo','Aceite aromático','Toalla caliente']},
+
+ /* Paquetes */
  {id:'combo',n:'Combo Catarsis',cat:'combo',ic:'crown',c:'#ffd166',p:400,d:75,t:'La experiencia completa: corte, ritual de barba, perfilado de cejas y facial exprés.',i:['Corte exclusivo','Ritual de barba','Cejas','Facial exprés']},
  {id:'novio',n:'Paquete novio / evento',cat:'combo',ic:'ring',c:'#ff9f68',p:650,d:100,t:'Para bodas y eventos: corte, barba, facial, cera de cejas y peinado final. Se recomienda reservar con anticipación.',i:['Corte y barba','Facial completo','Cera y cejas','Fotografía de prueba']},
+
+ /* Productos */
+ {id:'prod-cera',n:'Cera para cabello (120g)',cat:'productos',ic:'jar',c:'#eab308',p:240,d:0,sub:'120g · Fijación alta',t:'Cera moldeadora de fijación alta y acabado mate natural. No deja residuos blancos y se retira fácil con agua.',i:['Fijación flexible todo el día','Acabado mate sin brillo graso','Aroma amaderado sutil','Base agua de fácil lavado']},
+ {id:'prod-polvo',n:'Polvo de textura (20g)',cat:'productos',ic:'wand-magic-sparkles',c:'#22d3ee',p:280,d:0,sub:'20g · Volumen instantáneo',t:'Polvo voluminizador y texturizante ligero ideal para dar cuerpo, movimiento y control en cortes modernos o crop.',i:['Efecto volumen inmediato','Acabado ultra seco y natural','Ideal para cabello fino o lacio','Reactivable con las manos']},
+ {id:'prod-shampoo',n:'Shampoo revitalizante (300ml)',cat:'productos',ic:'pump-soap',c:'#34d399',p:260,d:0,sub:'300ml · Uso diario',t:'Limpieza profunda con extracto de menta, romero y biotina que fortalece el folículo y refresca el cuero cabelludo.',i:['Control de grasa y frescura','Con menta, romero y biotina','Libre de parabenos y sal','Apto para cabello y barba']},
+ {id:'prod-aceite',n:'Aceite para barba (30ml)',cat:'productos',ic:'droplet',c:'#f97316',p:220,d:0,sub:'30ml · Hidratación profunda',t:'Mezcla de aceites de argán, jojoba y vitamina E que suaviza el vello facial, evita la picazón y aporta brillo sano.',i:['Suaviza y doma la barba rebelde','Hidrata la piel debajo del vello','Notas de sándalo y cedro','Gotero dosificador de precisión']},
+
+ /* Cursos */
  {id:'curso-basico',n:'Curso básico de barbería',cat:'cursos',ic:'graduation-cap',c:'#38bdf8',p:3500,d:240,t:'Iníciate desde cero en el arte de la barbería: manejo de herramientas, cortes clásicos y fundamentos de desvanecido.',i:['Uso y mantenimiento de máquinas','Cortes clásicos a tijera y máquina','Introducción al fade y perfilado','Constancia de participación']},
  {id:'curso-perfeccionamiento',n:'Curso de perfeccionamiento',cat:'cursos',ic:'award',c:'#a78bfa',p:4500,d:240,t:'Domina técnicas avanzadas de degradado, texturizado, visagismo y ritual tradicional de barba con navaja.',i:['Skin fade y transiciones limpias','Texturizado y dirección de crecimiento','Ritual de barba y toalla caliente','Práctica supervisada en modelo real']},
  {id:'curso-grecas',n:'Curso de grecas y diseño',cat:'cursos',ic:'pen-nib',c:'#f43f5e',p:2200,d:180,t:'Aprende diseño artístico (hair tattoo), simetría, líneas curvas, sombreado con patillera y acabado con navaja.',i:['Geometría y proporción en cráneo','Manejo preciso de trimmer y navaja','Sombreados y efectos 3D','Diseño libre y corrección de trazos']}
@@ -248,17 +287,26 @@ $$('nav a').forEach(a=>{
 /* ===== TÍTULO: letras que saltan ===== */
 $('#hero-title').innerHTML=$('#hero-title').innerHTML.split('<br>').map(l=>[...l].map(c=>`<span>${c}</span>`).join('')).join('<br>');
 
-/* ===== SERVICIOS Y CURSOS ===== */
+/* ===== TARJETAS DE SERVICIOS, PRODUCTOS Y CURSOS ===== */
 const grid=$('#grid');
-grid.innerHTML=SERV.map(s=>`
-<div class="card" data-cat="${s.cat}" data-id="${s.id}" style="--c:${s.c}">
-  <div class="ico"><i class="fa-solid fa-${s.ic}"></i></div>
-  <h3>${s.n}</h3><p>${s.t}</p>
-  <div class="meta"><span class="price">${money(s.p)}</span><span class="dur"><i class="fa-regular fa-clock"></i> ${s.d} min</span></div>
-  <p class="hint">Toca para ver qué incluye</p>
-  <div class="more"><ul>${s.i.map(x=>`<li><i class="fa-solid fa-check"></i>${x}</li>`).join('')}</ul>
-  <a href="#agendar" class="btn pick">${s.cat==='cursos'?'Inscribirme a este curso':'Agendar este servicio'}</a></div>
-</div>`).join('');
+grid.innerHTML=SERV.map(s=>{
+  const badge = s.cat==='productos'
+    ? `<i class="fa-solid fa-box-open"></i> ${s.sub || 'Producto'}`
+    : `<i class="fa-regular fa-clock"></i> ${s.d} min`;
+  const btnText = s.cat==='cursos'
+    ? '+ Agregar este curso'
+    : (s.cat==='productos' ? '+ Agregar producto' : '+ Agregar este servicio');
+
+  return `
+  <div class="card" data-cat="${s.cat}" data-id="${s.id}" style="--c:${s.c}">
+    <div class="ico"><i class="fa-solid fa-${s.ic}"></i></div>
+    <h3>${s.n}</h3><p>${s.t}</p>
+    <div class="meta"><span class="price">${money(s.p)}</span><span class="dur">${badge}</span></div>
+    <p class="hint">Toca para ver detalles</p>
+    <div class="more"><ul>${s.i.map(x=>`<li><i class="fa-solid fa-check"></i>${x}</li>`).join('')}</ul>
+    <a href="#agendar" class="btn pick">${btnText}</a></div>
+  </div>`;
+}).join('');
 
 $$('.card').forEach(card=>{
   const c=card.style.getPropertyValue('--c').trim();
@@ -270,7 +318,7 @@ $$('.card').forEach(card=>{
   card.addEventListener('mouseenter',()=>document.body.style.setProperty('--ac',c));
   card.addEventListener('mouseleave',()=>{card.style.transform='';document.body.style.setProperty('--ac','#c5a059')});
   card.addEventListener('click',e=>{
-    if(e.target.closest('.pick')){selectService(card.dataset.id);return}
+    if(e.target.closest('.pick')){addService(card.dataset.id);return}
     card.classList.toggle('open');
   });
 });
@@ -279,36 +327,94 @@ $$('.tab').forEach(t=>t.addEventListener('click',()=>{
   $$('.card').forEach(c=>c.classList.toggle('hide',t.dataset.f!=='all'&&c.dataset.cat!==t.dataset.f));
 }));
 
-/* ===== RESERVA ===== */
+/* ===== RESERVA Y CARRITO ACUMULATIVO ===== */
 const sel=$('#b-serv');
-sel.innerHTML='<option value="" disabled selected>Selecciona un servicio o curso</option>'+SERV.map(s=>`<option value="${s.id}">${s.n} – $${s.p}</option>`).join('');
+const groups=[
+  {label:'Servicios',cats:['cabello','barba','rostro','combo']},
+  {label:'Productos',cats:['productos']},
+  {label:'Cursos',cats:['cursos']}
+];
+sel.innerHTML='<option value="" disabled selected>+ Añadir servicio, producto o curso...</option>'+
+  groups.map(g=>`<optgroup label="${g.label}">${
+    SERV.filter(s=>g.cats.includes(s.cat)).map(s=>`<option value="${s.id}">${s.n} – $${s.p}</option>`).join('')
+  }</optgroup>`).join('');
+
 const HOURS=['10:00','11:30','13:00','15:00','16:30','18:00'];
 let hour='';
+let cart=[];
+
 $('#slots').innerHTML=HOURS.map(h=>`<button type="button" class="slot" data-h="${h}">${h}</button>`).join('');
 const today=new Date().toISOString().slice(0,10);$('#b-date').min=today;
 
-function selectService(id){sel.value=id;update();toast('Seleccionado: '+SERV.find(s=>s.id===id).n)}
+function addService(id){
+  const item=SERV.find(s=>s.id===id);
+  if(!item)return;
+  cart.push(item);
+  sel.value='';
+  document.body.style.setProperty('--ac',item.c);
+  update();
+  toast('Agregado al resumen: '+item.n);
+}
+
+function removeService(idx){
+  cart.splice(idx,1);
+  update();
+}
+
+$('#cart-clear').addEventListener('click',()=>{
+  cart=[];
+  update();
+  toast('Resumen vaciado');
+});
+
 function update(){
-  const s=SERV.find(x=>x.id===sel.value);
-  $('#s-serv').textContent=s?s.n:'—';
-  $('#s-dur').textContent=s?s.d+' min':'—';
+  const list=$('#s-list');
+  $('#s-count').textContent=cart.length;
+  $('#cart-clear').style.display=cart.length?'inline':'none';
+
+  if(cart.length===0){
+    list.innerHTML='<div class="cart-empty">Aún no has agregado nada a tu resumen.</div>';
+  }else{
+    list.innerHTML=cart.map((item,idx)=>`
+      <div class="cart-item">
+        <span>${item.n}</span>
+        <small>$${item.p}</small>
+        <button type="button" class="cart-del" title="Quitar" onclick="removeService(${idx})">&times;</button>
+      </div>
+    `).join('');
+  }
+
+  const totalDur=cart.reduce((sum,item)=>sum+item.d,0);
+  const totalPrice=cart.reduce((sum,item)=>sum+item.p,0);
+
+  $('#s-dur').textContent=totalDur>0?totalDur+' min':'Solo entrega / compra';
   $('#s-bar').textContent=$('#b-bar').value.replace('Cualquier barbero disponible','Cualquiera');
   $('#s-date').textContent=$('#b-date').value?new Date($('#b-date').value+'T12:00').toLocaleDateString('es-MX',{weekday:'long',day:'numeric',month:'long'}):'—';
   $('#s-hour').textContent=hour||'—';
-  const t=$('#s-tot');t.textContent=s?'$'+s.p:'$0';t.classList.add('bump');setTimeout(()=>t.classList.remove('bump'),250);
-  if(s)document.body.style.setProperty('--ac',s.c);
+
+  const t=$('#s-tot');
+  t.textContent='$'+totalPrice;
+  t.classList.add('bump');
+  setTimeout(()=>t.classList.remove('bump'),250);
 }
-/* Simula horarios ocupados según la fecha (reemplazar con tu base de datos) */
+
+sel.addEventListener('change',()=>{
+  if(sel.value)addService(sel.value);
+});
+
+/* Simula horarios ocupados según la fecha */
 function refreshSlots(){
   const d=$('#b-date').value,seed=[...d].reduce((a,c)=>a+c.charCodeAt(0),0);
   $$('.slot').forEach((b,i)=>{b.classList.toggle('busy',d&&(seed+i)%5===0);if(b.classList.contains('busy')&&b.dataset.h===hour){hour='';b.classList.remove('on')}});
 }
 $$('.slot').forEach(b=>b.addEventListener('click',()=>{$$('.slot').forEach(x=>x.classList.remove('on'));b.classList.add('on');hour=b.dataset.h;update()}));
-['#b-serv','#b-bar','#b-date'].forEach(i=>$(i).addEventListener('change',()=>{refreshSlots();update()}));
+['#b-bar','#b-date'].forEach(i=>$(i).addEventListener('change',()=>{refreshSlots();update()}));
+
 $('#booking').addEventListener('submit',e=>{
   e.preventDefault();
+  if(cart.length===0){toast('Agrega al menos un servicio, producto o curso');return}
   if(!hour){toast('Elige un horario para continuar');return}
-  toast('¡Reserva confirmada! Te esperamos el '+$('#s-date').textContent+' a las '+hour);
+  toast(`¡Pedido confirmado (${cart.length} artículos/servicios)! Te esperamos el ${$('#s-date').textContent} a las ${hour}`);
   confetti();
 });
 
@@ -330,7 +436,7 @@ $('#r-pass').addEventListener('input',e=>{
 $('#auth-form').addEventListener('submit',e=>{
   e.preventDefault();
   const n=$('#r-name').value.split(' ')[0];
-  toast(login?'¡Bienvenido de nuevo!':'¡Cuenta creada, '+n+'! Ahora explora los servicios y cursos');
+  toast(login?'¡Bienvenido de nuevo!':'¡Cuenta creada, '+n+'! Ahora explora el catálogo');
   if(!login){$('#b-name').value=$('#r-name').value;setTimeout(()=>$('#servicios').scrollIntoView(),1200)}
 });
 
