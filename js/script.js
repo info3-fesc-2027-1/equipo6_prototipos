@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
   /* ===== DATOS DE SERVICIOS, PRODUCTOS Y CURSOS ===== */
-  /* Nota: Los cursos tienen d: 0 para no sumar tiempo en silla, y modalidad en sub */
   const SERV = [
     /* Cabello */
     { id: 'corte', n: 'Corte clásico', cat: 'cabello', ic: 'scissors', c: '#c5a059', p: 250, d: 40, t: 'Lavado, masaje capilar, corte a tijera o máquina y peinado con fijación profesional.', i: ['Diagnóstico de estilo', 'Lavado con masaje', 'Corte personalizado', 'Peinado y fijación'] },
@@ -37,6 +36,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const $ = s => document.querySelector(s);
   const $$ = s => [...document.querySelectorAll(s)];
   const money = n => '$' + n + ' MXN';
+
+  /* ===== HELPER: CALCULAR FECHA ESTIMADA DE ENTREGA ===== */
+  function getEstimatedDeliveryDate(baseDateStr, daysToAdd = 2) {
+    const base = baseDateStr ? new Date(baseDateStr + 'T12:00') : new Date();
+    base.setDate(base.getDate() + daysToAdd);
+    // Si cae en domingo (0), mover a lunes
+    if (base.getDay() === 0) base.setDate(base.getDate() + 1);
+    return base.toLocaleDateString('es-MX', { weekday: 'long', day: 'numeric', month: 'long' });
+  }
 
   /* ===== TOAST ===== */
   function toast(m) {
@@ -136,11 +144,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const sel = $('#b-serv');
   const groups = [
     { label: 'Servicios en silla (Cortes, Barba, Facial)', cats: ['cabello', 'barba', 'rostro', 'combo'] },
-    { label: 'Cursos (Academia)', cats: ['cursos'] },
-    { label: 'Productos (Tienda)', cats: ['productos'] }
+    { label: 'Productos (Tienda)', cats: ['productos'] },
+    { label: 'Cursos (Academia)', cats: ['cursos'] }
   ];
   if (sel) {
-    sel.innerHTML = '<option value="" disabled selected>+ Añadir servicio, curso o producto...</option>' +
+    sel.innerHTML = '<option value="" disabled selected>+ Añadir servicio, producto o curso...</option>' +
       groups.map(g => `<optgroup label="${g.label}">${
         SERV.filter(s => g.cats.includes(s.cat)).map(s => `<option value="${s.id}">${s.n} – $${s.p}</option>`).join('')
       }</optgroup>`).join('');
@@ -148,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const HOURS = ['10:00', '11:30', '13:00', '15:00', '16:30', '18:00'];
   let hour = '';
-  let cart = []; // Guarda objetos con { ...item, uid }
+  let cart = [];
 
   if ($('#slots')) {
     $('#slots').innerHTML = HOURS.map(h => `<button type="button" class="slot" data-h="${h}">${h}</button>`).join('');
@@ -215,13 +223,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     $('#cart-clear').style.display = cart.length ? 'inline' : 'none';
 
-    // Cálculos independientes
     const chairDur = chairServices.reduce((sum, item) => sum + item.d, 0);
     const servSubtotal = chairServices.reduce((sum, item) => sum + item.p, 0);
     const prodSubtotal = productAndCourseItems.reduce((sum, item) => sum + item.p, 0);
     const grandTotal = servSubtotal + prodSubtotal;
 
-    // Barbero y duración aplican únicamente si hay servicios en silla
     const barberName = $('#b-bar').value.replace('Cualquier barbero disponible', 'Cualquiera');
     $('#s-bar').textContent = chairServices.length > 0 ? barberName : 'No aplica';
     $('#s-dur').textContent = chairServices.length > 0 ? `${chairDur} min` : 'No aplica';
@@ -239,6 +245,10 @@ document.addEventListener('DOMContentLoaded', () => {
     t.classList.add('bump');
     setTimeout(() => t.classList.remove('bump'), 250);
   }
+
+  sel?.addEventListener('change', () => {
+    if (sel.value) addService(sel.value);
+  });
 
   function refreshSlots() {
     const d = $('#b-date').value, seed = [...d].reduce((a, c) => a + c.charCodeAt(0), 0);
@@ -262,6 +272,263 @@ document.addEventListener('DOMContentLoaded', () => {
     refreshSlots();
     update();
   }));
+
+  /* ===== ESTADO EN VIVO: BARBEROS, PEDIDOS (REALES + SIMULADOS) Y ALUMNOS DE CURSOS ===== */
+  let barbersLive = [
+    {
+      id: 'carlos',
+      name: 'Carlos "Master Cut"',
+      role: 'Especialista en Fade & Navaja',
+      status: 'busy',
+      currentTask: 'En silla: Fade / degradado + Ritual de barba',
+      minsLeft: 25,
+      totalMins: 45,
+      nextFreeText: 'Se desocupa en ~25 min'
+    },
+    {
+      id: 'mateo',
+      name: 'Mateo Grooming',
+      role: 'Corte Clásico, Facial & Cera',
+      status: 'free',
+      currentTask: 'Silla libre y esterilizada',
+      minsLeft: 0,
+      totalMins: 40,
+      nextFreeText: 'Disponible ahora mismo'
+    }
+  ];
+
+  const ORDER_STEPS = [
+    { label: 'Confirmado', icon: 'fa-clipboard-check' },
+    { label: 'En camino a sucursal', icon: 'fa-truck-fast' },
+    { label: 'Listo en barbería', icon: 'fa-store' },
+    { label: 'Entregado', icon: 'fa-box-open' }
+  ];
+
+  // Pedidos simulados iniciales + pedidos reales hechos por el cliente
+  const DEFAULT_SIM_ORDERS = [
+    {
+      folio: 'CAT-098',
+      clientName: 'Diego Mendoza',
+      isSimulated: true,
+      itemsText: 'Polvo de textura (20g), Shampoo revitalizante (300ml)',
+      step: 1,
+      deliveryDate: getEstimatedDeliveryDate('', 1),
+      pickupWindow: `Entrega estimada: ${getEstimatedDeliveryDate('', 1)} · 2:00 PM`
+    },
+    {
+      folio: 'CAT-102',
+      clientName: 'Luis Fernando R.',
+      isSimulated: true,
+      itemsText: 'Cera para cabello (120g), Aceite para barba (30ml)',
+      step: 2,
+      deliveryDate: 'Hoy',
+      pickupWindow: '¡Listo en mostrador! Pasa a recogerlo hoy hasta las 8:00 PM'
+    }
+  ];
+
+  let liveOrders = JSON.parse(localStorage.getItem('catarsis_live_orders_v2') || 'null') || DEFAULT_SIM_ORDERS;
+
+  function saveLiveOrders() {
+    localStorage.setItem('catarsis_live_orders_v2', JSON.stringify(liveOrders));
+  }
+
+  // Registro de personas que han comprado cursos (Simulados + Reales del cliente)
+  const DEFAULT_STUDENTS = [
+    {
+      studentName: 'Alejandro Torres',
+      courseName: 'Curso básico de barbería',
+      date: '18 nov 2026',
+      isSimulated: true
+    },
+    {
+      studentName: 'Roberto Sánchez',
+      courseName: 'Curso de grecas y diseño',
+      date: '20 nov 2026',
+      isSimulated: true
+    }
+  ];
+
+  let courseStudents = JSON.parse(localStorage.getItem('catarsis_course_students') || 'null') || DEFAULT_STUDENTS;
+
+  function saveCourseStudents() {
+    localStorage.setItem('catarsis_course_students', JSON.stringify(courseStudents));
+  }
+
+  function renderCourseStudents() {
+    const list = $('#course-students-list');
+    const badge = $('#students-count-badge');
+    if (!list) return;
+
+    if (badge) badge.textContent = `${courseStudents.length} inscritos`;
+
+    list.innerHTML = courseStudents.map(st => `
+      <div class="student-card ${st.isSimulated ? '' : 'mine'}">
+        <div class="student-top">
+          <div class="student-name">
+            <i class="fa-solid fa-user-graduate"></i>
+            <span>${st.studentName}</span>
+          </div>
+          <span class="tag-origin ${st.isSimulated ? 'sim' : 'real'}">
+            ${st.isSimulated ? 'Simulado' : 'Tu inscripción'}
+          </span>
+        </div>
+        <div class="student-course">${st.courseName}</div>
+        <div class="student-meta">
+          <span>Inscrito: ${st.date}</span>
+          <span style="color:#4ade80;font-weight:600">✓ Cupo confirmado</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderBarbersLive() {
+    const container = $('#barbers-live-list');
+    if (!container) return;
+
+    container.innerHTML = barbersLive.map(b => {
+      let badgeClass = 'free';
+      let badgeLabel = 'Disponible';
+      let pct = 100;
+
+      if (b.status === 'busy') {
+        badgeClass = 'busy';
+        badgeLabel = 'Ocupado en silla';
+        pct = Math.max(15, Math.round(((b.totalMins - b.minsLeft) / b.totalMins) * 100));
+      } else if (b.status === 'soon') {
+        badgeClass = 'soon';
+        badgeLabel = 'Por desocuparse';
+        pct = 85;
+      }
+
+      return `
+      <div class="barber-card">
+        <div class="barber-head">
+          <div class="barber-name">
+            <div class="barber-avatar"><i class="fa-solid fa-user-tie"></i></div>
+            <div>
+              <h3>${b.name}</h3>
+              <small>${b.role}</small>
+            </div>
+          </div>
+          <span class="badge-status ${badgeClass}"><i class="dot"></i> ${badgeLabel}</span>
+        </div>
+        <p class="barber-detail">${b.currentTask}</p>
+        <div class="prog-bar"><i style="width:${pct}%;background:${b.status === 'free' ? '#4ade80' : (b.status === 'soon' ? '#facc15' : '#c5a059')}"></i></div>
+        <div class="barber-foot">
+          <span><i class="fa-regular fa-clock"></i> ${b.nextFreeText}</span>
+          <button type="button" class="btn sm ${b.status === 'free' ? '' : 'ghost'}" onclick="selectBarberFromLive('${b.name.replace(/"/g, '&quot;')}')">
+            ${b.status === 'free' ? 'Agendar ahora' : 'Reservar siguiente turno'}
+          </button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  window.selectBarberFromLive = function(barberFullName) {
+    $('#b-bar').value = barberFullName;
+    update();
+    $('#agendar').scrollIntoView({ behavior: 'smooth' });
+    toast(`Barbero seleccionado: ${barberFullName}`);
+  };
+
+  $('#sim-barber-btn')?.addEventListener('click', () => {
+    barbersLive = barbersLive.map(b => {
+      if (b.status === 'busy') {
+        return {
+          ...b,
+          status: 'soon',
+          minsLeft: 5,
+          currentTask: 'Finalizando peinado y limpieza de contorno',
+          nextFreeText: 'Se desocupa en ~5 min'
+        };
+      } else if (b.status === 'soon') {
+        return {
+          ...b,
+          status: 'free',
+          minsLeft: 0,
+          currentTask: 'Silla libre y lista para el siguiente cliente',
+          nextFreeText: 'Disponible ahora mismo'
+        };
+      } else {
+        return {
+          ...b,
+          status: 'busy',
+          minsLeft: 35,
+          totalMins: 40,
+          currentTask: 'En silla: Corte clásico con toalla caliente',
+          nextFreeText: 'Se desocupa en ~35 min'
+        };
+      }
+    });
+    renderBarbersLive();
+    toast('Estado de sillas actualizado en tiempo real');
+  });
+
+  function renderLiveOrders() {
+    const container = $('#orders-live-list');
+    if (!container) return;
+
+    if (liveOrders.length === 0) {
+      container.innerHTML = '<div class="cart-empty">No tienes pedidos de productos activos.</div>';
+      return;
+    }
+
+    container.innerHTML = liveOrders.map((ord, idx) => {
+      const stepsHtml = ORDER_STEPS.map((st, sIdx) => {
+        const cls = sIdx < ord.step ? 'done' : (sIdx === ord.step ? 'curr done' : '');
+        return `
+        <div class="step ${cls}">
+          <div class="step-ico"><i class="fa-solid ${st.icon}"></i></div>
+          <span>${st.label}</span>
+        </div>`;
+      }).join('');
+
+      const isReady = ord.step === 2;
+      const isDelivered = ord.step === 3;
+
+      return `
+      <div class="order-track ${ord.isSimulated ? '' : 'mine'}">
+        <div class="order-head">
+          <div class="order-id-wrap">
+            <span class="order-id">Pedido #${ord.folio}</span>
+            <span class="tag-origin ${ord.isSimulated ? 'sim' : 'real'}">
+              ${ord.isSimulated ? 'Simulado' : 'Tu pedido'}
+            </span>
+          </div>
+          <span class="order-pickup">
+            <i class="fa-solid ${isReady ? 'fa-bell' : 'fa-calendar-check'}"></i>
+            ${isDelivered ? 'Entregado al cliente' : (isReady ? '¡Ya puedes recogerlo en barbería!' : ord.pickupWindow)}
+          </span>
+        </div>
+        <div class="order-client">Cliente: <b>${ord.clientName}</b></div>
+        <div class="order-items">${ord.itemsText}</div>
+        <div class="stepper">${stepsHtml}</div>
+        <div class="order-foot">
+          <span>Sucursal: Av. Principal #123, Col. Centro</span>
+          ${!isDelivered
+            ? `<button type="button" class="btn ghost sm" onclick="advanceOrderStep(${idx})">Simular siguiente estado →</button>`
+            : `<span style="color:#4ade80;font-weight:600">✓ Completado</span>`}
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  window.advanceOrderStep = function(idx) {
+    if (!liveOrders[idx]) return;
+    if (liveOrders[idx].step < 3) {
+      liveOrders[idx].step++;
+      if (liveOrders[idx].step === 2) {
+        liveOrders[idx].pickupWindow = '¡Listo en mostrador! Pasa a recogerlo hoy hasta las 8:00 PM';
+        toast(`¡El pedido #${liveOrders[idx].folio} ya está listo para recoger en barbería!`);
+      } else if (liveOrders[idx].step === 3) {
+        toast(`Pedido #${liveOrders[idx].folio} marcado como entregado`);
+      } else {
+        toast(`Pedido #${liveOrders[idx].folio} actualizado: ${ORDER_STEPS[liveOrders[idx].step].label}`);
+      }
+      saveLiveOrders();
+      renderLiveOrders();
+    }
+  };
 
   /* ===== REGISTRO / LOGIN + LEALTAD + HISTORIAL ===== */
   let login = false;
@@ -459,8 +726,60 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    const clientName = $('#b-name').value.trim() || (currentUser ? currentUser.fullName : 'Cliente');
+    const rawDate = $('#b-date').value;
     const totalPrice = cart.reduce((sum, item) => sum + item.p, 0);
     const dateText = $('#s-date').textContent;
+
+    // 1. Si el cliente compró PRODUCTOS, crear su pedido real con fecha estimada de entrega
+    const purchasedProducts = cart.filter(x => x.cat === 'productos');
+    if (purchasedProducts.length > 0) {
+      const folioNum = Math.floor(105 + Math.random() * 890);
+      const estDelivery = getEstimatedDeliveryDate(rawDate, 2);
+      liveOrders.unshift({
+        folio: `CAT-${folioNum}`,
+        clientName,
+        isSimulated: false,
+        itemsText: purchasedProducts.map(x => x.n).join(', '),
+        step: 0,
+        deliveryDate: estDelivery,
+        pickupWindow: `Entrega estimada: ${estDelivery} · ${hour} hrs`
+      });
+      saveLiveOrders();
+      renderLiveOrders();
+    }
+
+    // 2. Si el cliente compró CURSOS, registrarlo automáticamente en el listado de alumnos
+    const purchasedCourses = cart.filter(x => x.cat === 'cursos');
+    if (purchasedCourses.length > 0) {
+      const todayFormatted = new Date().toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
+      purchasedCourses.forEach(course => {
+        courseStudents.unshift({
+          studentName: clientName,
+          courseName: course.n,
+          date: todayFormatted,
+          isSimulated: false
+        });
+      });
+      saveCourseStudents();
+      renderCourseStudents();
+    }
+
+    // 3. Si hay servicios en silla y eligió un barbero específico, actualizar su estado en vivo
+    const chairServices = cart.filter(x => x.cat !== 'productos' && x.cat !== 'cursos');
+    const selectedBarber = $('#b-bar').value;
+    if (chairServices.length > 0 && selectedBarber !== 'Cualquier barbero disponible') {
+      const totalMins = chairServices.reduce((sum, x) => sum + x.d, 0);
+      barbersLive = barbersLive.map(b => b.name === selectedBarber ? {
+        ...b,
+        status: 'busy',
+        minsLeft: totalMins,
+        totalMins,
+        currentTask: `Reservado (${clientName}): ${chairServices.map(x => x.n).join(', ')} (${hour} hrs)`,
+        nextFreeText: `Ocupado ~${totalMins} min en su turno`
+      } : b);
+      renderBarbersLive();
+    }
 
     if (currentUser) {
       currentUser.history = currentUser.history || [];
@@ -474,9 +793,9 @@ document.addEventListener('DOMContentLoaded', () => {
       saveUser();
       renderLoyalty();
       renderHistory();
-      toast('¡Confirmado! Ganaste +1 sello en tu Tarjeta Catarsis');
+      toast('¡Confirmado! Tu pedido y/o inscripción ya aparecen en "Estado en Vivo"');
     } else {
-      toast(`¡Pedido confirmado (${cart.length} artículos/servicios)! Te esperamos el ${dateText} a las ${hour}`);
+      toast('¡Confirmado! Revisa tu seguimiento e inscripción en "Estado en Vivo"');
     }
 
     confetti();
@@ -484,6 +803,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderAuthState();
   update();
+  renderBarbersLive();
+  renderLiveOrders();
+  renderCourseStudents();
 
   /* ===== TARJETA GLASSMORPHISM: INCLINACIÓN 3D + BRILLO AL CURSOR ===== */
   const glass = $('#auth');
