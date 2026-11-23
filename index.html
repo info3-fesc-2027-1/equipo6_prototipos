@@ -418,32 +418,53 @@ nav a:hover{color:var(--ac)}
 .hint{font-size:.72rem;color:var(--mut);margin-top:10px;transition:opacity .3s}
 .card.open .hint{opacity:0}
 
-/* Reserva */
-.book{display:grid;grid-template-columns:1.3fr 1fr;gap:26px}
+/* Reserva y Resúmenes Divididos */
+.book{display:grid;grid-template-columns:1.25fr 1fr;gap:26px}
 .slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .slot{padding:10px;border-radius:10px;border:1px solid var(--line);background:#0d0c0b;color:var(--txt);cursor:pointer;font:inherit;font-size:.85rem;transition:.25s}
 .slot:hover{border-color:var(--ac);transform:translateY(-2px)}
 .slot.on{background:var(--ac);color:#111;border-color:var(--ac)}
 .slot.busy{opacity:.3;text-decoration:line-through;pointer-events:none}
+
 .sum{position:sticky;top:90px;align-self:start}
+.sum-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
 .sum ul{list-style:none;padding:0}
-.sum li{list-style:none;display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed var(--line);font-size:.88rem;color:var(--mut)}
+.sum li{list-style:none;display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line);font-size:.84rem;color:var(--mut)}
 .sum li b{color:var(--txt);font-weight:600;text-align:right}
 
-/* Lista acumulada en resumen */
-.cart-box{margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
-.cart-title{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ac);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+/* Bloques separados: Servicios en silla vs Productos y Cursos */
+.split-block{
+  background:#141210;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px 16px;
+  margin-bottom:14px;
+}
+.split-title{
+  font-size:.74rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--ac);
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-weight:700;
+}
 .cart-clear{background:none;border:0;color:var(--mut);font-size:.72rem;cursor:pointer;text-decoration:underline;padding:0}
 .cart-clear:hover{color:var(--txt)}
-.cart-list{max-height:190px;overflow-y:auto;padding-right:4px}
-.cart-item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:7px 10px;margin-bottom:6px;background:#0d0c0b;border:1px solid var(--line);border-radius:10px;font-size:.84rem;animation:popIn .25s ease}
+.cart-list{max-height:140px;overflow-y:auto;padding-right:4px;margin-bottom:8px}
+.cart-item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 10px;margin-bottom:6px;background:#0d0c0b;border:1px solid var(--line);border-radius:8px;font-size:.82rem;animation:popIn .25s ease}
 @keyframes popIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .cart-item span{color:var(--txt);flex:1}
-.cart-item small{color:var(--ac);font-family:Oswald;font-size:.95rem;white-space:nowrap}
+.cart-item small{color:var(--ac);font-family:Oswald;font-size:.92rem;white-space:nowrap}
 .cart-del{background:transparent;border:0;color:var(--mut);cursor:pointer;font-size:1rem;line-height:1;padding:2px 6px;border-radius:6px;transition:.2s}
 .cart-del:hover{color:#e0524d;background:rgba(224,82,77,.15)}
-.cart-empty{font-size:.84rem;color:var(--mut);font-style:italic;padding:6px 0}
-.total{display:flex;justify-content:space-between;font-family:Oswald;font-size:1.6rem;margin-top:16px;color:var(--ac)}
+.cart-empty{font-size:.8rem;color:var(--mut);font-style:italic;padding:4px 0}
+.sub-row{display:flex;justify-content:space-between;font-size:.85rem;color:var(--txt);padding-top:8px;margin-top:6px;border-top:1px solid var(--line);font-weight:600}
+.sub-row b{font-family:Oswald;font-size:1.05rem;color:var(--ac)}
+
+.total{display:flex;justify-content:space-between;align-items:center;font-family:Oswald;font-size:1.65rem;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);color:var(--ac)}
 .total span{transition:transform .3s}
 .bump{transform:scale(1.25)}
 
@@ -596,9 +617,9 @@ footer{text-align:center;padding:20px;font-size:.75rem;color:var(--mut);border-t
   <div class="grid" id="grid"></div>
 </section>
 
-<!-- 3. AGENDAR Y PEDIDOS -->
+<!-- 3. AGENDAR Y PEDIDOS (CON RESÚMENES DIVIDIDOS) -->
 <section id="agendar" class="wrap">
-  <div class="title reveal"><h2>Reserva tu cita o pedido</h2><p>Agrega servicios, productos o cursos. El resumen acumula todo automáticamente.</p></div>
+  <div class="title reveal"><h2>Reserva tu cita o pedido</h2><p>Los servicios en silla se organizan en tu cita, y los productos y cursos en tu pedido.</p></div>
   <div class="book reveal">
     <form class="panel" id="booking">
       <div class="row">
@@ -607,7 +628,7 @@ footer{text-align:center;padding:20px;font-size:.75rem;color:var(--mut);border-t
       </div>
       <div class="row">
         <div class="field"><label>Agregar al pedido</label><select id="b-serv"></select></div>
-        <div class="field"><label>Barbero / Instructor</label>
+        <div class="field"><label>Barbero (para cortes/barba/facial)</label>
           <select id="b-bar"><option>Cualquier barbero disponible</option><option>Carlos "Master Cut"</option><option>Mateo Grooming</option></select></div>
       </div>
       <div class="field"><label>Fecha</label><input type="date" id="b-date" required></div>
@@ -615,24 +636,54 @@ footer{text-align:center;padding:20px;font-size:.75rem;color:var(--mut);border-t
       <button class="btn" style="width:100%;margin-top:6px">Confirmar pedido / reserva</button>
     </form>
 
+    <!-- RESUMEN DIVIDIDO EN 2 BLOQUES -->
     <div class="panel sum">
-      <h2>Tu resumen</h2><p class="sub">Servicios, productos y cursos acumulados</p>
-      <div class="cart-box">
-        <div class="cart-title">
-          <span>Seleccionados (<b id="s-count">0</b>)</span>
-          <button type="button" class="cart-clear" id="cart-clear" style="display:none">Vaciar todo</button>
+      <div class="sum-head">
+        <div>
+          <h2>Tu resumen</h2>
+          <p class="sub" style="margin-bottom:0">Desglosado por tipo</p>
         </div>
-        <div class="cart-list" id="s-list">
-          <div class="cart-empty">Aún no has agregado nada a tu resumen.</div>
+        <button type="button" class="cart-clear" id="cart-clear" style="display:none">Vaciar todo</button>
+      </div>
+
+      <!-- BLOQUE 1: SOLO SERVICIOS EN SILLA (CORTES, BARBA, FACIAL, PAQUETES) -->
+      <div class="split-block">
+        <div class="split-title">
+          <span><i class="fa-solid fa-scissors"></i> Servicios en silla (<b id="s-serv-count">0</b>)</span>
+        </div>
+        <div class="cart-list" id="s-serv-list">
+          <div class="cart-empty">Ningún corte, barba o facial agregado.</div>
+        </div>
+        <ul>
+          <li>Barbero <b id="s-bar">Cualquiera</b></li>
+          <li>Fecha <b id="s-date">—</b></li>
+          <li>Hora <b id="s-hour">—</b></li>
+          <li>Duración en silla <b id="s-dur">0 min</b></li>
+        </ul>
+        <div class="sub-row">
+          <span>Subtotal servicios</span>
+          <b id="s-serv-sub">$0</b>
         </div>
       </div>
-      <ul>
-        <li>Barbero <b id="s-bar">Cualquiera</b></li>
-        <li>Fecha <b id="s-date">—</b></li>
-        <li>Hora <b id="s-hour">—</b></li>
-        <li>Duración en silla <b id="s-dur">0 min</b></li>
-      </ul>
-      <div class="total"><span>Total</span><span id="s-tot">$0</span></div>
+
+      <!-- BLOQUE 2: PRODUCTOS Y CURSOS -->
+      <div class="split-block">
+        <div class="split-title">
+          <span><i class="fa-solid fa-bag-shopping"></i> Productos y Cursos (<b id="s-prod-count">0</b>)</span>
+        </div>
+        <div class="cart-list" id="s-prod-list">
+          <div class="cart-empty">Ningún producto o curso agregado.</div>
+        </div>
+        <ul>
+          <li>Entrega / Acceso <b id="s-delivery">En barbería / Academia</b></li>
+        </ul>
+        <div class="sub-row">
+          <span>Subtotal productos y cursos</span>
+          <b id="s-prod-sub">$0</b>
+        </div>
+      </div>
+
+      <div class="total"><span>Total general</span><span id="s-tot">$0</span></div>
     </div>
   </div>
 </section>

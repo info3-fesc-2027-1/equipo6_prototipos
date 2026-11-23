@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   /* ===== DATOS DE SERVICIOS, PRODUCTOS Y CURSOS ===== */
+  /* Nota: Los cursos tienen d: 0 para no sumar tiempo en silla, y modalidad en sub */
   const SERV = [
     /* Cabello */
     { id: 'corte', n: 'Corte clásico', cat: 'cabello', ic: 'scissors', c: '#c5a059', p: 250, d: 40, t: 'Lavado, masaje capilar, corte a tijera o máquina y peinado con fijación profesional.', i: ['Diagnóstico de estilo', 'Lavado con masaje', 'Corte personalizado', 'Peinado y fijación'] },
@@ -27,10 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
     { id: 'prod-shampoo', n: 'Shampoo revitalizante (300ml)', cat: 'productos', ic: 'pump-soap', c: '#34d399', p: 260, d: 0, sub: '300ml · Uso diario', t: 'Limpieza profunda con extracto de menta, romero y biotina que fortalece el folículo y refresca el cuero cabelludo.', i: ['Control de grasa y frescura', 'Con menta, romero y biotina', 'Libre de parabenos y sal', 'Apto para cabello y barba'] },
     { id: 'prod-aceite', n: 'Aceite para barba (30ml)', cat: 'productos', ic: 'droplet', c: '#f97316', p: 220, d: 0, sub: '30ml · Hidratación profunda', t: 'Mezcla de aceites de argán, jojoba y vitamina E que suaviza el vello facial, evita la picazón y aporta brillo sano.', i: ['Suaviza y doma la barba rebelde', 'Hidrata la piel debajo del vello', 'Notas de sándalo y cedro', 'Gotero dosificador de precisión'] },
 
-    /* Cursos */
-    { id: 'curso-basico', n: 'Curso básico de barbería', cat: 'cursos', ic: 'graduation-cap', c: '#38bdf8', p: 3500, d: 240, t: 'Iníciate desde cero en el arte de la barbería: manejo de herramientas, cortes clásicos y fundamentos de desvanecido.', i: ['Uso y mantenimiento de máquinas', 'Cortes clásicos a tijera y máquina', 'Introducción al fade y perfilado', 'Constancia de participación'] },
-    { id: 'curso-perfeccionamiento', n: 'Curso de perfeccionamiento', cat: 'cursos', ic: 'award', c: '#a78bfa', p: 4500, d: 240, t: 'Domina técnicas avanzadas de degradado, texturizado, visagismo y ritual tradicional de barba con navaja.', i: ['Skin fade y transiciones limpias', 'Texturizado y dirección de crecimiento', 'Ritual de barba y toalla caliente', 'Práctica supervisada en modelo real'] },
-    { id: 'curso-grecas', n: 'Curso de grecas y diseño', cat: 'cursos', ic: 'pen-nib', c: '#f43f5e', p: 2200, d: 180, t: 'Aprende diseño artístico (hair tattoo), simetría, líneas curvas, sombreado con patillera y acabado con navaja.', i: ['Geometría y proporción en cráneo', 'Manejo preciso de trimmer y navaja', 'Sombreados y efectos 3D', 'Diseño libre y corrección de trazos'] }
+    /* Cursos (Sin tiempo en silla) */
+    { id: 'curso-basico', n: 'Curso básico de barbería', cat: 'cursos', ic: 'graduation-cap', c: '#38bdf8', p: 3500, d: 0, sub: 'Taller práctico · Academia', t: 'Iníciate desde cero en el arte de la barbería: manejo de herramientas, cortes clásicos y fundamentos de desvanecido.', i: ['Uso y mantenimiento de máquinas', 'Cortes clásicos a tijera y máquina', 'Introducción al fade y perfilado', 'Constancia de participación'] },
+    { id: 'curso-perfeccionamiento', n: 'Curso de perfeccionamiento', cat: 'cursos', ic: 'award', c: '#a78bfa', p: 4500, d: 0, sub: 'Nivel avanzado · Academia', t: 'Domina técnicas avanzadas de degradado, texturizado, visagismo y ritual tradicional de barba con navaja.', i: ['Skin fade y transiciones limpias', 'Texturizado y dirección de crecimiento', 'Ritual de barba y toalla caliente', 'Práctica supervisada en modelo real'] },
+    { id: 'curso-grecas', n: 'Curso de grecas y diseño', cat: 'cursos', ic: 'pen-nib', c: '#f43f5e', p: 2200, d: 0, sub: 'Hair Tattoo · Academia', t: 'Aprende diseño artístico (hair tattoo), simetría, líneas curvas, sombreado con patillera y acabado con navaja.', i: ['Geometría y proporción en cráneo', 'Manejo preciso de trimmer y navaja', 'Sombreados y efectos 3D', 'Diseño libre y corrección de trazos'] }
   ];
 
   const $ = s => document.querySelector(s);
@@ -78,9 +79,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const grid = $('#grid');
   if (grid) {
     grid.innerHTML = SERV.map(s => {
-      const badge = s.cat === 'productos'
-        ? `<i class="fa-solid fa-box-open"></i> ${s.sub || 'Producto'}`
-        : `<i class="fa-regular fa-clock"></i> ${s.d} min`;
+      let badge = '';
+      if (s.cat === 'productos') {
+        badge = `<i class="fa-solid fa-box-open"></i> ${s.sub || 'Producto'}`;
+      } else if (s.cat === 'cursos') {
+        badge = `<i class="fa-solid fa-graduation-cap"></i> ${s.sub || 'Curso'}`;
+      } else {
+        badge = `<i class="fa-regular fa-clock"></i> ${s.d} min en silla`;
+      }
+
       const btnText = s.cat === 'cursos'
         ? '+ Agregar este curso'
         : (s.cat === 'productos' ? '+ Agregar producto' : '+ Agregar este servicio');
@@ -125,15 +132,15 @@ document.addEventListener('DOMContentLoaded', () => {
     $$('.card').forEach(c => c.classList.toggle('hide', t.dataset.f !== 'all' && c.dataset.cat !== t.dataset.f));
   }));
 
-  /* ===== RESERVA Y CARRITO ACUMULATIVO ===== */
+  /* ===== RESERVA Y RESÚMENES DIVIDIDOS ===== */
   const sel = $('#b-serv');
   const groups = [
-    { label: 'Servicios', cats: ['cabello', 'barba', 'rostro', 'combo'] },
-    { label: 'Productos', cats: ['productos'] },
-    { label: 'Cursos', cats: ['cursos'] }
+    { label: 'Servicios en silla (Cortes, Barba, Facial)', cats: ['cabello', 'barba', 'rostro', 'combo'] },
+    { label: 'Cursos (Academia)', cats: ['cursos'] },
+    { label: 'Productos (Tienda)', cats: ['productos'] }
   ];
   if (sel) {
-    sel.innerHTML = '<option value="" disabled selected>+ Añadir servicio, producto o curso...</option>' +
+    sel.innerHTML = '<option value="" disabled selected>+ Añadir servicio, curso o producto...</option>' +
       groups.map(g => `<optgroup label="${g.label}">${
         SERV.filter(s => g.cats.includes(s.cat)).map(s => `<option value="${s.id}">${s.n} – $${s.p}</option>`).join('')
       }</optgroup>`).join('');
@@ -141,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const HOURS = ['10:00', '11:30', '13:00', '15:00', '16:30', '18:00'];
   let hour = '';
-  let cart = [];
+  let cart = []; // Guarda objetos con { ...item, uid }
 
   if ($('#slots')) {
     $('#slots').innerHTML = HOURS.map(h => `<button type="button" class="slot" data-h="${h}">${h}</button>`).join('');
@@ -152,15 +159,15 @@ document.addEventListener('DOMContentLoaded', () => {
   function addService(id) {
     const item = SERV.find(s => s.id === id);
     if (!item) return;
-    cart.push(item);
+    cart.push({ ...item, uid: Date.now() + Math.random() });
     sel.value = '';
     document.body.style.setProperty('--ac', item.c);
     update();
     toast('Agregado al resumen: ' + item.n);
   }
 
-  window.removeService = function(idx) {
-    cart.splice(idx, 1);
+  window.removeByUid = function(uid) {
+    cart = cart.filter(item => item.uid !== uid);
     update();
   };
 
@@ -171,39 +178,67 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function update() {
-    const list = $('#s-list');
-    $('#s-count').textContent = cart.length;
-    $('#cart-clear').style.display = cart.length ? 'inline' : 'none';
+    // Bloque 1: Solo servicios en silla (cabello, barba, rostro, combo)
+    const chairServices = cart.filter(x => x.cat !== 'productos' && x.cat !== 'cursos');
+    // Bloque 2: Productos y Cursos
+    const productAndCourseItems = cart.filter(x => x.cat === 'productos' || x.cat === 'cursos');
 
-    if (cart.length === 0) {
-      list.innerHTML = '<div class="cart-empty">Aún no has agregado nada a tu resumen.</div>';
+    // 1. Renderizar lista de Servicios en silla
+    $('#s-serv-count').textContent = chairServices.length;
+    const servList = $('#s-serv-list');
+    if (chairServices.length === 0) {
+      servList.innerHTML = '<div class="cart-empty">Ningún corte, barba o facial agregado.</div>';
     } else {
-      list.innerHTML = cart.map((item, idx) => `
+      servList.innerHTML = chairServices.map(item => `
         <div class="cart-item">
           <span>${item.n}</span>
           <small>$${item.p}</small>
-          <button type="button" class="cart-del" title="Quitar" onclick="removeService(${idx})">&times;</button>
+          <button type="button" class="cart-del" title="Quitar" onclick="removeByUid(${item.uid})">&times;</button>
         </div>
       `).join('');
     }
 
-    const totalDur = cart.reduce((sum, item) => sum + item.d, 0);
-    const totalPrice = cart.reduce((sum, item) => sum + item.p, 0);
+    // 2. Renderizar lista de Productos y Cursos
+    $('#s-prod-count').textContent = productAndCourseItems.length;
+    const prodList = $('#s-prod-list');
+    if (productAndCourseItems.length === 0) {
+      prodList.innerHTML = '<div class="cart-empty">Ningún producto o curso agregado.</div>';
+    } else {
+      prodList.innerHTML = productAndCourseItems.map(item => `
+        <div class="cart-item">
+          <span>${item.n}</span>
+          <small>$${item.p}</small>
+          <button type="button" class="cart-del" title="Quitar" onclick="removeByUid(${item.uid})">&times;</button>
+        </div>
+      `).join('');
+    }
 
-    $('#s-dur').textContent = totalDur > 0 ? totalDur + ' min' : 'Solo entrega / compra';
-    $('#s-bar').textContent = $('#b-bar').value.replace('Cualquier barbero disponible', 'Cualquiera');
-    $('#s-date').textContent = $('#b-date').value ? new Date($('#b-date').value + 'T12:00').toLocaleDateString('es-MX', { weekday: 'long', day: 'numeric', month: 'long' }) : '—';
+    $('#cart-clear').style.display = cart.length ? 'inline' : 'none';
+
+    // Cálculos independientes
+    const chairDur = chairServices.reduce((sum, item) => sum + item.d, 0);
+    const servSubtotal = chairServices.reduce((sum, item) => sum + item.p, 0);
+    const prodSubtotal = productAndCourseItems.reduce((sum, item) => sum + item.p, 0);
+    const grandTotal = servSubtotal + prodSubtotal;
+
+    // Barbero y duración aplican únicamente si hay servicios en silla
+    const barberName = $('#b-bar').value.replace('Cualquier barbero disponible', 'Cualquiera');
+    $('#s-bar').textContent = chairServices.length > 0 ? barberName : 'No aplica';
+    $('#s-dur').textContent = chairServices.length > 0 ? `${chairDur} min` : 'No aplica';
+
+    $('#s-date').textContent = $('#b-date').value
+      ? new Date($('#b-date').value + 'T12:00').toLocaleDateString('es-MX', { weekday: 'long', day: 'numeric', month: 'long' })
+      : '—';
     $('#s-hour').textContent = hour || '—';
 
+    $('#s-serv-sub').textContent = '$' + servSubtotal;
+    $('#s-prod-sub').textContent = '$' + prodSubtotal;
+
     const t = $('#s-tot');
-    t.textContent = '$' + totalPrice;
+    t.textContent = '$' + grandTotal;
     t.classList.add('bump');
     setTimeout(() => t.classList.remove('bump'), 250);
   }
-
-  sel?.addEventListener('change', () => {
-    if (sel.value) addService(sel.value);
-  });
 
   function refreshSlots() {
     const d = $('#b-date').value, seed = [...d].reduce((a, c) => a + c.charCodeAt(0), 0);
@@ -233,9 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentUser = JSON.parse(localStorage.getItem('catarsis_user') || 'null');
 
   function saveUser() {
-    if (currentUser) {
-      localStorage.setItem('catarsis_user', JSON.stringify(currentUser));
-    }
+    if (currentUser) localStorage.setItem('catarsis_user', JSON.stringify(currentUser));
   }
 
   function renderLoyalty() {
@@ -243,8 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modStamps = stampsCount % 6 === 0 && stampsCount > 0 ? 6 : stampsCount % 6;
     $('#loyalty-count').textContent = `${modStamps} / 6`;
 
-    const gridStamps = $('#stamps-grid');
-    gridStamps.innerHTML = Array.from({ length: 6 }, (_, i) => {
+    $('#stamps-grid').innerHTML = Array.from({ length: 6 }, (_, i) => {
       const filled = i < modStamps;
       return `<div class="stamp ${filled ? 'filled' : ''}" title="Sello ${i + 1}">
         <i class="fa-solid ${i === 5 ? 'fa-crown' : 'fa-scissors'}"></i>
@@ -287,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.repeatOrder = function(idx) {
     if (!currentUser || !currentUser.history[idx]) return;
     const order = currentUser.history[idx];
-    cart = [...order.items];
+    cart = order.items.map(x => ({ ...x, uid: Date.now() + Math.random() }));
     update();
     $('#agendar').scrollIntoView({ behavior: 'smooth' });
     toast('Pedido cargado nuevamente en tu resumen');
@@ -442,7 +474,7 @@ document.addEventListener('DOMContentLoaded', () => {
       saveUser();
       renderLoyalty();
       renderHistory();
-      toast('¡Cita confirmada! Ganaste +1 sello en tu Tarjeta Catarsis');
+      toast('¡Confirmado! Ganaste +1 sello en tu Tarjeta Catarsis');
     } else {
       toast(`¡Pedido confirmado (${cart.length} artículos/servicios)! Te esperamos el ${dateText} a las ${hour}`);
     }
@@ -451,6 +483,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   renderAuthState();
+  update();
 
   /* ===== TARJETA GLASSMORPHISM: INCLINACIÓN 3D + BRILLO AL CURSOR ===== */
   const glass = $('#auth');
